@@ -129,6 +129,20 @@
   <ItemGroup>
     <ClCompile Include="Project.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="New folder\skybox_back.jpg" />
+    <Image Include="New folder\skybox_bottom.jpg" />
+    <Image Include="New folder\skybox_front.jpg" />
+    <Image Include="New folder\skybox_left.jpg" />
+    <Image Include="New folder\skybox_night_back.jpg" />
+    <Image Include="New folder\skybox_night_bottom.jpg" />
+    <Image Include="New folder\skybox_night_front.jpg" />
+    <Image Include="New folder\skybox_night_left.jpg" />
+    <Image Include="New folder\skybox_night_right.jpg" />
+    <Image Include="New folder\skybox_night_top.jpg" />
+    <Image Include="New folder\skybox_right.jpg" />
+    <Image Include="New folder\skybox_top.jpg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

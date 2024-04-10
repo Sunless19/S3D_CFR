@@ -70,5 +70,17 @@
     <None Include="ShadowMappingDepth.fs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="skybox.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="skybox.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ModelShader.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ModelShader.fs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

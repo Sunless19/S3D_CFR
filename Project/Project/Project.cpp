@@ -185,7 +185,7 @@ int main(int argc, char** argv)
 
     // load textures
     // -------------
-    unsigned int floorTexture = CreateTexture("Assets\\skybox_bottom2.jpg");
+    unsigned int floorTexture = CreateTexture("skybox_images\\grass.jpg");
 
     // configure depth map FBO
     // -----------------------

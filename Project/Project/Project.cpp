@@ -512,16 +512,12 @@ void processInput(GLFWwindow* window)
     //{
     //    /*pCamera->SetPosition(tankVehicle.GetPosition() + glm::vec3(0.0f, 3.0f, 8.5f));*/
     //    freeCameraView = false;
-    //    isHelicopterMoving = false;
-    //    isTankMoving = true;
     //    pCamera->SetFreeCamera(false);/*
     //    currentObject = &tankVehicle;*/
     //}
     //if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
     //{
     //    freeCameraView = false;
-    //    isTankMoving = false;
-    //    isHelicopterMoving = true;
     //    pCamera->SetFreeCamera(false);
     //}
     //
@@ -529,8 +525,6 @@ void processInput(GLFWwindow* window)
     //{
     //    freeCameraView = true;
     //    pCamera->Reset(SCR_WIDTH, SCR_HEIGHT);
-    //    isTankMoving = false;
-    //    isHelicopterMoving = false;
     //    pCamera->SetFreeCamera(true);
     //}
 

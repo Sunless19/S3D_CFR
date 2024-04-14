@@ -184,7 +184,7 @@ int main(int argc, char** argv)
     Shader skyboxShader("skybox.vs", "skybox.fs");
 
     // load textures
-    // -------------
+    //// -------------
     unsigned int floorTexture = CreateTexture("skybox_images\\grass.jpg");
 
     // configure depth map FBO
@@ -361,23 +361,6 @@ int main(int argc, char** argv)
         glCullFace(GL_FRONT);
         renderScene(shadowMappingDepthShader);
 
-
-
-        float tankRotation = 0.0f;
-        glm::vec3 tankScale = glm::vec3(0.5f);
-        glm::vec3 helicopterScale = glm::vec3(1.5f);
-        float helicopterRotation = 90.0f;
-        glm::vec3 propellerScale = glm::vec3(1.5f);
-
-
-
-
-
-        float mountainRotation = 0.0f;
-        glm::vec3 mountainScale = glm::vec3(0.1f);
-
-
-
         glCullFace(GL_BACK);
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -388,17 +371,17 @@ int main(int argc, char** argv)
         glViewport(0, 0, SCR_WIDTH, SCR_HEIGHT);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         shadowMappingShader.Use();
-        glm::mat4 projection = pCamera->GetProjectionMatrix();/*
-        glm::mat4 view = pCamera->GetViewMatrix(currentObject);*/
-        shadowMappingShader.SetMat4("projection", projection);/*
-        shadowMappingShader.SetMat4("view", view);*/
+        glm::mat4 projection = pCamera->GetProjectionMatrix();
+        glm::mat4 view = pCamera->GetViewMatrix();
+        shadowMappingShader.SetMat4("projection", projection);
+        shadowMappingShader.SetMat4("view", view);
         shadowMappingShader.SetFloat("ambientFactor", ambientFactor);
         // set light uniforms
         shadowMappingShader.SetVec3("viewPos", pCamera->GetPosition());
         shadowMappingShader.SetVec3("lightPos", lightPos);
         shadowMappingShader.SetMat4("lightSpaceMatrix", lightSpaceMatrix);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, floorTexture);
+        glActiveTexture(GL_TEXTURE0);/*
+        glBindTexture(GL_TEXTURE_2D, floorTexture);*/
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, depthMap);
         glDisable(GL_CULL_FACE);
@@ -421,10 +404,10 @@ int main(int argc, char** argv)
         skyboxShader.SetInt("skybox2", 1);
         skyboxShader.SetFloat("blendFactor", blendFactor);
 
-        //glm::mat4 viewSB = glm::mat4(glm::mat3(pCamera->GetViewMatrix(currentObject)));
+        glm::mat4 viewSB = glm::mat4(glm::mat3(pCamera->GetViewMatrix()));
 
-        glm::mat4 projectionSB = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);/*
-        skyboxShader.SetMat4("view", viewSB);*/
+        glm::mat4 projectionSB = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        skyboxShader.SetMat4("view", viewSB);
         skyboxShader.SetMat4("projection", projectionSB);
 
         glActiveTexture(GL_TEXTURE0);
@@ -460,6 +443,7 @@ void renderScene(const Shader& shader)
 }
 
 unsigned int planeVAO = 0;
+
 void renderFloor()
 {
     unsigned int planeVBO;
@@ -508,25 +492,23 @@ void processInput(GLFWwindow* window)
     }
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
-    //if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
-    //{
-    //    /*pCamera->SetPosition(tankVehicle.GetPosition() + glm::vec3(0.0f, 3.0f, 8.5f));*/
-    //    freeCameraView = false;
-    //    pCamera->SetFreeCamera(false);/*
-    //    currentObject = &tankVehicle;*/
-    //}
-    //if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
-    //{
-    //    freeCameraView = false;
-    //    pCamera->SetFreeCamera(false);
-    //}
-    //
-    //if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
-    //{
-    //    freeCameraView = true;
-    //    pCamera->Reset(SCR_WIDTH, SCR_HEIGHT);
-    //    pCamera->SetFreeCamera(true);
-    //}
+    if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
+    {
+        freeCameraView = false;
+        pCamera->SetFreeCamera(false);
+    }
+    if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
+    {
+        freeCameraView = false;
+        pCamera->SetFreeCamera(false);
+    }
+    
+    if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
+    {
+        freeCameraView = true;
+        pCamera->Reset(SCR_WIDTH, SCR_HEIGHT);
+        pCamera->SetFreeCamera(true);
+    }
 
 
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)

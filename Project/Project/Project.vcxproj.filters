@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Images">
+      <UniqueIdentifier>{c1050de1-9452-4531-a6b8-be3bdec2e567}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Project.cpp">
@@ -26,41 +29,41 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="New folder\skybox_back.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="New folder\skybox_bottom.jpg">
-      <Filter>Resource Files</Filter>
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="New folder\skybox_back.jpg">
+      <Filter>Images</Filter>
     </Image>
     <Image Include="New folder\skybox_front.jpg">
-      <Filter>Resource Files</Filter>
+      <Filter>Images</Filter>
     </Image>
     <Image Include="New folder\skybox_left.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="New folder\skybox_right.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="New folder\skybox_top.jpg">
-      <Filter>Resource Files</Filter>
+      <Filter>Images</Filter>
     </Image>
     <Image Include="New folder\skybox_night_back.jpg">
-      <Filter>Resource Files</Filter>
+      <Filter>Images</Filter>
     </Image>
     <Image Include="New folder\skybox_night_bottom.jpg">
-      <Filter>Resource Files</Filter>
+      <Filter>Images</Filter>
     </Image>
     <Image Include="New folder\skybox_night_front.jpg">
-      <Filter>Resource Files</Filter>
+      <Filter>Images</Filter>
     </Image>
     <Image Include="New folder\skybox_night_left.jpg">
-      <Filter>Resource Files</Filter>
+      <Filter>Images</Filter>
     </Image>
     <Image Include="New folder\skybox_night_right.jpg">
-      <Filter>Resource Files</Filter>
+      <Filter>Images</Filter>
     </Image>
     <Image Include="New folder\skybox_night_top.jpg">
-      <Filter>Resource Files</Filter>
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="New folder\skybox_right.jpg">
+      <Filter>Images</Filter>
+    </Image>
+    <Image Include="New folder\skybox_top.jpg">
+      <Filter>Images</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

@@ -45,7 +45,7 @@ public:
 
     void SetPosition(glm::vec3 position);
 
-  //  glm::mat4 GetViewMatrix(MoveableObject* model);
+    glm::mat4 GetViewMatrix();
 
     const glm::mat4 GetProjectionMatrix() const;
 

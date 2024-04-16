@@ -114,6 +114,25 @@ unsigned int skyboxIndices[] =
 	6,2,3
 };
 
+std::vector<glm::vec3> railPositions =
+{
+
+    glm::vec3(5.0f, -1.55f, 10.0f),
+    glm::vec3(-5.0f, -1.55f, 10.5f),
+    glm::vec3(10.0f, -1.55f, 20.0f),
+    glm::vec3(-10.0f, -1.55f, 20.0f),
+    glm::vec3(0.0f, -1.55f, 20.0f)
+};
+
+std::vector<glm::vec3> trainPosition =
+{
+    glm::vec3(-18.0f, 5.0f, -10.0f)
+};
+
+//Model railModel, trainModel;
+
+//MoveableObject trainVehicle, railVehicle;
+
 std::vector<std::string> facesDay
 {
 	"skybox_images\\skybox_right.jpg",
@@ -306,6 +325,16 @@ int main(int argc, char** argv)
         }
     }
 
+   /* trainModel = Model("Assets\\train.obj");
+    trainVehicle = MoveableObject(trainModel, SCR_WIDTH, SCR_HEIGHT, glm::vec3(0.0f, -1.55f, 0.0f));
+    currentObject = &trainVehicle;
+
+    railModel = Model("Assets\\rail.obj");
+    railVehicle = MoveableObject(railModel, SCR_WIDTH, SCR_HEIGHT, glm::vec3(0.0f, 5.0f, 0.0f));
+
+    Model trainModel("Assets\\train.obj");
+    Model railModel("Assets\\rail.obj");*/
+
     while (!glfwWindowShouldClose(window))
     {
 
@@ -361,6 +390,25 @@ int main(int argc, char** argv)
         glCullFace(GL_FRONT);
         renderScene(shadowMappingDepthShader);
 
+        /*currentMoveTrain += 0.0005;
+        float trainRotation = 0.0f;
+        glm::vec3 tankScale = glm::vec3(0.5f);
+
+        renderModel(shadowMappingDepthShader, trainVehicle.GetVehicleModel(), trainVehicle.GetPosition(), trainVehicle.GetRotation(), trainScale);
+       
+        for (auto& trainPosition : trainPosition)
+        {
+            renderModel(shadowMappingDepthShader, trainModel, trainPosition - glm::vec3(0.0f, 0.0f, currentMoveTrain), trainRotation, trainScale);
+        }
+
+        float railRotation = 0.0f;
+        glm::vec3 railScale = glm::vec3(0.1f);
+
+        for (int i = 0; i < railPositions.size(); i++)
+        {
+            renderModel(shadowMappingDepthShader, railModel, railPositions[i] - glm::vec3(0.0f, 0.0f, 0.0f), railRotation, railScales[i]);
+        }*/
+
         glCullFace(GL_BACK);
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -386,6 +434,18 @@ int main(int argc, char** argv)
         glBindTexture(GL_TEXTURE_2D, depthMap);
         glDisable(GL_CULL_FACE);
         renderScene(shadowMappingShader);
+
+        /*renderModel(ModelShader, trainVehicle.GetVehicleModel(), trainVehicle.GetPosition(), trainVehicle.GetRotation(), trainScale);
+
+        for (auto& trainPosition : trainPosition)
+        {
+            renderModel(ModelShader, trainModel, trainPosition - glm::vec3(0.0f, 0.0f, currentMoveTrain), trainRotation, trainScale);
+        }
+
+        for (int i = 0; i < railPositions.size(); i++)
+        {
+            renderModel(ModelShader, railModel, railPositions[i] - glm::vec3(0.0f, 0.0f, 0.0f), railRotation, railScales[i]);
+        }*/
 
         glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f); // White light
         glm::vec3 lightDir = glm::normalize(glm::vec3(-0.2f, -1.0f, -0.3f)); // Example direction
@@ -476,6 +536,28 @@ void renderFloor()
 
     glBindVertexArray(planeVAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);
+
+    /*unsigned int modelVAO = 0;
+    unsigned int modelVBO = 0;
+    unsigned int modelEBO;
+
+    void renderModel(Shader & ourShader, Model & ourModel, const glm::vec3 & position, float rotationAngle, const glm::vec3 & scale)
+    {
+        ourShader.Use();
+
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, position);
+        model = glm::rotate(model, glm::radians(rotationAngle), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::scale(model, scale);
+
+        glm::mat4 viewMatrix = pCamera->GetViewMatrix(currentObject);
+        glm::mat4 projectionMatrix = pCamera->GetProjectionMatrix();
+
+        ourShader.SetMat4("model", model);
+        ourShader.SetMat4("view", viewMatrix);
+        ourShader.SetMat4("projection", projectionMatrix);
+        ourModel.Draw(ourShader);
+    }*/
 }
 
 void processInput(GLFWwindow* window)
@@ -510,6 +592,26 @@ void processInput(GLFWwindow* window)
         pCamera->SetFreeCamera(true);
     }
 
+    //train Movement
+    /*if (isTrainMoving)
+    {
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        {
+            trainVehicle.ProcessKeyboard(V_FORWARD, (float)deltaTime);
+        }
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        {
+            trainVehicle.ProcessKeyboard(V_BACKWARD, (float)deltaTime);
+        }
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        {
+            trainVehicle.ProcessKeyboard(V_LEFT, (float)deltaTime);
+        }
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        {
+            tankVehicle.ProcessKeyboard(V_RIGHT, (float)deltaTime);
+        }
+    }*/
 
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
         pCamera->ProcessKeyboard(LEFT, (float)deltaTime);

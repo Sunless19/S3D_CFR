@@ -98,6 +98,9 @@ StyleCopReport.xml
 *.svclog
 *.scc
 
+#Except objects in the Assets folder
+!**/Assets/**/*.obj
+
 # Chutzpah Test files
 _Chutzpah*
 

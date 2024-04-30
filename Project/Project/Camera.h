@@ -5,8 +5,7 @@
 #include <GLM.hpp>
 #include <gtc/matrix_transform.hpp>
 #include <glfw3.h>
-
-//#include "MoveableObject.h"
+#include "MoveableObject.h"
 
 enum ECameraMovementType
 {
@@ -45,7 +44,7 @@ public:
 
     void SetPosition(glm::vec3 position);
 
-    glm::mat4 GetViewMatrix();
+    glm::mat4 GetViewMatrix(MoveableObject* model);
 
     const glm::mat4 GetProjectionMatrix() const;
 

@@ -53,14 +53,14 @@ void Camera::SetPosition(glm::vec3 position)
     this->position = position;
 }
 
-glm::mat4 Camera::GetViewMatrix()
+glm::mat4 Camera::GetViewMatrix(MoveableObject* model)
 {
     if (freeCamera)
         return glm::lookAt(position, position + forward, up);
     float distance = 10.0f;
-    this->forward.x = cos(0) * distance;
-    this->forward.z = sin(0) * distance;
-    return glm::lookAt(glm::vec3(-forward.x, forward.y, -forward.z) + glm::vec3(0.f, 5.0f, 0.f),glm::vec3(0.f, 3.0f, 0.f), glm::vec3(0.0f, 1.0f, 0.0f));
+    this->forward.x = cos(glm::radians(model->GetYaw())) * distance;
+    this->forward.z = sin(glm::radians(model->GetYaw())) * distance;
+    return glm::lookAt(model->GetPosition() + glm::vec3(-forward.x, forward.y, -forward.z) + glm::vec3(0.f, 5.0f, 0.f), model->GetPosition() + glm::vec3(0.f, 3.0f, 0.f), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
 const glm::mat4 Camera::GetProjectionMatrix() const

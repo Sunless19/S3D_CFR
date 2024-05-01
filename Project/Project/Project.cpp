@@ -122,17 +122,21 @@ unsigned int skyboxIndices[] =
 std::vector<glm::vec3> railPositions =
 {
 
-	glm::vec3(5.0f, -1.55f, 10.0f),
-	glm::vec3(-5.0f, -1.55f, 10.5f),
-	glm::vec3(10.0f, -1.55f, 20.0f),
-	glm::vec3(-10.0f, -1.55f, 20.0f),
-	glm::vec3(0.0f, -1.55f, 20.0f)
+	glm::vec3(0.0f, -1.5f, 0.0f),
+	glm::vec3(0.0f, -1.5f, 60.0f),
+	glm::vec3(0.0f, -1.5f, 120.0f),
+	glm::vec3(0.0f, -1.5f, 180.0f),
+	glm::vec3(0.0f, -1.5f, -60.0f),
+	glm::vec3(0.0f, -1.5f, -120.0f),
+	glm::vec3(0.0f, -1.5f, -180.0f),
 };
 
-std::vector<glm::vec3> trainPosition =
-{
-	glm::vec3(-18.0f, 5.0f, -10.0f)
-};
+float scaleFactor = 2.0f; // You can adjust this value according to your needs
+
+//std::vector<glm::vec3> trainPosition =
+//{
+//	glm::vec3(0.0f, -1.5f, 0.0f)
+//};
 
 Model railModel, trainModel;
 MoveableObject trainVehicle, railVehicle;
@@ -161,6 +165,9 @@ std::vector<std::string>facesNight
 
 float blendFactor = 0;
 float ambientFactor = 0.9;
+
+float trainX = 0.0f;
+float trainZ = 0.0f;
 
 int main(int argc, char** argv)
 {
@@ -332,11 +339,11 @@ int main(int argc, char** argv)
 
 	//Train model loading
 	trainModel = Model("Assets\\Train\\electrictrain.obj");
-	trainVehicle = MoveableObject(trainModel, SCR_WIDTH, SCR_HEIGHT, glm::vec3(-18.0f, 5.0f, -10.0f));
+	trainVehicle = MoveableObject(trainModel, SCR_WIDTH, SCR_HEIGHT, glm::vec3(trainX, -1.25f, trainZ));
 
 	//Rail model loading
 	railModel = Model("Assets\\Rail\\rail.obj");
-	railVehicle = MoveableObject(railModel, SCR_WIDTH, SCR_HEIGHT, glm::vec3(0.0f, 5.0f, 0.0f));
+	//railVehicle = MoveableObject(railModel, SCR_WIDTH, SCR_HEIGHT, glm::vec3(0.0f, 5.0f, 0.0f));
 
 
 	while (!glfwWindowShouldClose(window))
@@ -394,12 +401,12 @@ int main(int argc, char** argv)
 		renderScene(shadowMappingDepthShader);
 
 		//---TRAIN VARIABLES---
-		float trainRotation = 0.0f;
+		float trainRotation = -10.0f;
 		glm::vec3 trainScale = glm::vec3(0.5f);
 
 		//---RAILS VARIABLES---
 		float railRotation = 0.0f;
-		glm::vec3 railScale = glm::vec3(0.01f, 0.01f, 0.02f);
+		glm::vec3 railScale = glm::vec3(0.001f, 0.001f, 0.002f);
 
 		//TRAIN AND RAILS SHADOW RENDERING
 
@@ -443,13 +450,13 @@ int main(int argc, char** argv)
 		renderScene(shadowMappingShader);
 
 		//-----TRAIN AND RAILS RENDERING------
-		renderModel(ModelShader, trainVehicle.GetVehicleModel(), trainVehicle.GetPosition(), trainVehicle.GetRotation(), trainScale);
-		for (auto& trainPosition : trainPosition)
-		{
-			renderModel(ModelShader, trainModel, trainPosition - glm::vec3(0.0f, 0.0f, 0.0f), trainRotation, trainScale);
-		}
+		renderModel(ModelShader, trainVehicle.GetVehicleModel(), trainVehicle.GetPosition(), trainVehicle.GetRotation()-1, trainScale);
+		//for (auto& trainPosition : trainPosition)
+		//{
+		//	renderModel(ModelShader, trainModel, trainPosition - glm::vec3(0.0f, 0.0f, 0.0f), trainVehicle, trainScale);
+		//}
 
-		renderModel(ModelShader, railVehicle.GetVehicleModel(), railVehicle.GetPosition(), railVehicle.GetRotation(), railScale);
+		//renderModel(ModelShader, railVehicle.GetVehicleModel(), railVehicle.GetPosition(), railVehicle.GetRotation(), railScale);
 		for (int i = 0; i < railPositions.size(); i++)
 		{
 			renderModel(ModelShader, railModel, railPositions[i] - glm::vec3(0.0f), railRotation, railScale);
@@ -603,8 +610,8 @@ void processInput(GLFWwindow* window)
 	}
 
 	//train Movement
-	/*if (isTrainMoving)
-	{
+	//if (isTrainMoving)
+	//{
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		{
 			trainVehicle.ProcessKeyboard(V_FORWARD, (float)deltaTime);
@@ -613,21 +620,20 @@ void processInput(GLFWwindow* window)
 		{
 			trainVehicle.ProcessKeyboard(V_BACKWARD, (float)deltaTime);
 		}
-		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		/*if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		{
 			trainVehicle.ProcessKeyboard(V_LEFT, (float)deltaTime);
-		}
-		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		}*/
+		/*if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		{
 			tankVehicle.ProcessKeyboard(V_RIGHT, (float)deltaTime);
-		}
-	}*/
+		}*/
+	//}
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		pCamera->ProcessKeyboard(LEFT, (float)deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 		pCamera->ProcessKeyboard(RIGHT, (float)deltaTime);
-
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 		pCamera->ProcessKeyboard(FORWARD, (float)deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
@@ -636,7 +642,6 @@ void processInput(GLFWwindow* window)
 		pCamera->ProcessKeyboard(UP, (float)deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_PAGE_DOWN) == GLFW_PRESS)
 		pCamera->ProcessKeyboard(DOWN, (float)deltaTime);
-
 	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
 	{
 		int width, height;

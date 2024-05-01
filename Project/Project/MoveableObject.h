@@ -54,7 +54,7 @@ private:
     void UpdateObjectVectors();
 
 protected:
-    const float vehicleSpeedFactor = 2.5f;
+    const float vehicleSpeedFactor = 12.5f;
 
     // Perspective properties
     float zNear;

@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 
+
 #include <GL/glew.h>
 
 #define GLM_FORCE_CTOR_INIT 
@@ -134,6 +135,21 @@ std::vector<glm::vec3> railPositions =
 std::vector<glm::vec3> treePositions =
 {
 	glm::vec3(5.0f, -1.5f, -20.0f),
+glm::vec3(14.5f, -1.5f, -12.0f),
+glm::vec3(-22.0f, -1.5f, 28.0f),
+glm::vec3(27.0f, -1.5f, -35.0f),
+glm::vec3(-39.0f, -1.5f, 50.0f),
+glm::vec3(43.0f, -1.5f, -45.0f),
+glm::vec3(51.0f, -1.5f, 20.0f),
+glm::vec3(-36.5f, -1.5f, -13.0f),
+glm::vec3(12.0f, -1.5f, 52.0f),
+glm::vec3(110.0f, -1.5f, -83.0f),
+glm::vec3(-24.0f, -1.5f, 18.0f),
+glm::vec3(48.0f, -1.5f, -20.0f),
+glm::vec3(-63.0f, -1.5f, 15.0f),
+glm::vec3(76.0f, -1.5f, -10.0f),
+glm::vec3(-85.0f, -1.5f, -25.0f),
+glm::vec3(100.5f, -1.5f, 31.0f),
 };
 
 float scaleFactor = 2.0f; // You can adjust this value according to your needs
@@ -143,7 +159,7 @@ float scaleFactor = 2.0f; // You can adjust this value according to your needs
 //	glm::vec3(0.0f, -1.5f, 0.0f)
 //};
 
-Model railModel, trainModel,treeModel;
+Model railModel, trainModel, treeModel;
 MoveableObject trainVehicle, railVehicle;
 
 std::vector<std::string> facesDay
@@ -465,7 +481,7 @@ int main(int argc, char** argv)
 		renderScene(shadowMappingShader);
 
 		//-----TRAIN AND RAILS RENDERING------
-		renderModel(ModelShader, trainVehicle.GetVehicleModel(), trainVehicle.GetPosition(), trainVehicle.GetRotation()-1, trainScale);
+		renderModel(ModelShader, trainVehicle.GetVehicleModel(), trainVehicle.GetPosition(), trainVehicle.GetRotation() - 1, trainScale);
 		//for (auto& trainPosition : trainPosition)
 		//{
 		//	renderModel(ModelShader, trainModel, trainPosition - glm::vec3(0.0f, 0.0f, 0.0f), trainVehicle, trainScale);
@@ -477,12 +493,12 @@ int main(int argc, char** argv)
 			renderModel(ModelShader, railModel, railPositions[i] - glm::vec3(0.0f), railRotation, railScale);
 		}
 
-		
+
 		for (int i = 0; i < treePositions.size(); i++)
 		{
 			renderModel(ModelShader, treeModel, treePositions[i] - glm::vec3(0.0f), treeRotation, treeScale);
 		}
-		
+
 		//-------------------------------------
 
 		glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f); // White light
@@ -637,22 +653,22 @@ void processInput(GLFWwindow* window)
 	//train Movement
 	//if (isTrainMoving)
 	//{
-		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		{
-			trainVehicle.ProcessKeyboard(V_FORWARD, (float)deltaTime);
-		}
-		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		{
-			trainVehicle.ProcessKeyboard(V_BACKWARD, (float)deltaTime);
-		}
-		/*if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		{
-			trainVehicle.ProcessKeyboard(V_LEFT, (float)deltaTime);
-		}*/
-		/*if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		{
-			tankVehicle.ProcessKeyboard(V_RIGHT, (float)deltaTime);
-		}*/
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		trainVehicle.ProcessKeyboard(V_FORWARD, (float)deltaTime);
+	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	{
+		trainVehicle.ProcessKeyboard(V_BACKWARD, (float)deltaTime);
+	}
+	/*if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		trainVehicle.ProcessKeyboard(V_LEFT, (float)deltaTime);
+	}*/
+	/*if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		tankVehicle.ProcessKeyboard(V_RIGHT, (float)deltaTime);
+	}*/
 	//}
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)

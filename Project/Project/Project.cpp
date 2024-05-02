@@ -131,6 +131,11 @@ std::vector<glm::vec3> railPositions =
 	glm::vec3(0.0f, -1.5f, -180.0f),
 };
 
+std::vector<glm::vec3> treePositions =
+{
+	glm::vec3(5.0f, -1.5f, -20.0f),
+};
+
 float scaleFactor = 2.0f; // You can adjust this value according to your needs
 
 //std::vector<glm::vec3> trainPosition =
@@ -138,7 +143,7 @@ float scaleFactor = 2.0f; // You can adjust this value according to your needs
 //	glm::vec3(0.0f, -1.5f, 0.0f)
 //};
 
-Model railModel, trainModel;
+Model railModel, trainModel,treeModel;
 MoveableObject trainVehicle, railVehicle;
 
 std::vector<std::string> facesDay
@@ -171,6 +176,9 @@ float trainZ = 0.0f;
 
 int main(int argc, char** argv)
 {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_DEPTH_TEST);
 	std::string strFullExeFileName = argv[0];
 	std::string strExePath;
 	const size_t last_slash_idx = strFullExeFileName.rfind('\\');
@@ -345,6 +353,8 @@ int main(int argc, char** argv)
 	railModel = Model("Assets\\Rail\\rail.obj");
 	//railVehicle = MoveableObject(railModel, SCR_WIDTH, SCR_HEIGHT, glm::vec3(0.0f, 5.0f, 0.0f));
 
+	//Tree model loading
+	treeModel = Model("Assets\\Tree\\Tree.obj");
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -408,6 +418,11 @@ int main(int argc, char** argv)
 		float railRotation = 0.0f;
 		glm::vec3 railScale = glm::vec3(0.001f, 0.001f, 0.002f);
 
+		//---TREE VARIABLES---
+		float treeRotation = 0.0f;
+		glm::vec3 treeScale = glm::vec3(1);
+
+
 		//TRAIN AND RAILS SHADOW RENDERING
 
 		//renderModel(shadowMappingDepthShader, trainVehicle.GetVehicleModel(), trainVehicle.GetPosition(), trainVehicle.GetRotation(), glm::vec3(1.0f));
@@ -461,6 +476,13 @@ int main(int argc, char** argv)
 		{
 			renderModel(ModelShader, railModel, railPositions[i] - glm::vec3(0.0f), railRotation, railScale);
 		}
+
+		
+		for (int i = 0; i < treePositions.size(); i++)
+		{
+			renderModel(ModelShader, treeModel, treePositions[i] - glm::vec3(0.0f), treeRotation, treeScale);
+		}
+		
 		//-------------------------------------
 
 		glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f); // White light
@@ -559,6 +581,7 @@ unsigned int modelEBO;
 
 void renderModel(Shader& ourShader, Model& ourModel, const glm::vec3& position, float rotationAngle, const glm::vec3& scale)
 {
+
 	ourShader.Use();
 
 	glm::mat4 model = glm::mat4(1.0f);
@@ -574,6 +597,8 @@ void renderModel(Shader& ourShader, Model& ourModel, const glm::vec3& position, 
 	ourShader.SetMat4("projection", projectionMatrix);
 
 	ourModel.Draw(ourShader);
+
+
 }
 
 

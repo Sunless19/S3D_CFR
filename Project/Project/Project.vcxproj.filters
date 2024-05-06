@@ -100,6 +100,18 @@
     <None Include="ModelShader.fs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="Blending.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Blending.fs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Floor.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Floor.fs">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">

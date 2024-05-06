@@ -195,6 +195,12 @@ std::vector<glm::vec3> mountainsScales =
 	//glm::vec3(0.4f)
 };
 
+//std::vector<glm::vec3> stationsPositions =
+//{
+//	glm::vec3(50.0f, -1.55f, -125.0f),
+//	glm::vec3(-50.0f, -1.55f, -135.0f),
+//};
+
 float scaleFactor = 2.0f; // You can adjust this value according to your needs
 
 //std::vector<glm::vec3> trainPosition =
@@ -202,7 +208,7 @@ float scaleFactor = 2.0f; // You can adjust this value according to your needs
 //	glm::vec3(0.0f, -1.5f, 0.0f)
 //};
 
-Model railModel, trainModel, treeModel, mountainModel;
+Model railModel, trainModel, treeModel, mountainModel,stationModel, benchModel, humanModel;
 MoveableObject trainVehicle, railVehicle;
 
 std::vector<std::string> facesDay
@@ -415,7 +421,48 @@ int main(int argc, char** argv)
 	//Tree model loading
 	treeModel = Model("Assets\\Tree\\Tree.obj");
 
+	//Mountain model loading
 	mountainModel = Model("Assets\\Mountain\\mountain.obj");
+
+	//Station model loading
+	stationModel = Model("Assets\\Station\\station.obj");
+
+	//Bench model loading
+	benchModel = Model("Assets\\Bench\\Bench_HighRes.obj");
+
+	//Human model loading
+	humanModel = Model("Assets\\Human\\Humano_01Business_01_30K.obj");
+
+	// Grass vertices
+	//float grassVertices[] = {
+	//	// positions          // texture Coords 
+	//	0.5f,  0.5f, 0.0f,  1.0f, 0.0f,
+	//   -0.5f,  0.5f, 0.0f,  0.0f, 0.0f,
+	//   -0.5f, -0.5f, 0.0f,  0.0f, 1.0f,
+
+	//	0.5f,  0.5f, 0.0f,  1.0f, 0.0f,
+	//   -0.5f, -0.5f, 0.0f,  0.0f, 1.0f,
+	//	0.5f, -0.5f, 0.0f,  1.0f, 1.0f
+	//};
+
+	//// Grass VAO si VBO
+	//unsigned int grassVAO, grassVBO;
+	//glGenVertexArrays(1, &grassVAO);
+	//glGenBuffers(1, &grassVBO);
+	//glBindVertexArray(grassVAO);
+	//glBindBuffer(GL_ARRAY_BUFFER, grassVBO);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(grassVertices), &grassVertices, GL_STATIC_DRAW);
+	//glEnableVertexAttribArray(0);
+	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	//glEnableVertexAttribArray(1);
+	//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+
+	//// Grass texture
+	//unsigned int grassTexture = CreateTexture(strExePath + "\\grass3.png");
+
+	//Shader shaderFloor("Floor.vs", "Floor.fs");
+	//Shader shaderBlending("Blending.vs", "Blending.fs");
+	//shaderBlending.SetInt("texture1", 0);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -471,6 +518,47 @@ int main(int argc, char** argv)
 		glCullFace(GL_FRONT);
 		renderScene(shadowMappingDepthShader);
 
+		//Grass
+
+		//glBindVertexArray(grassVAO);
+		//glBindTexture(GL_TEXTURE_2D, grassTexture);
+
+		//for (float row = -4.5f; row <= 4.5f; row += 0.5f)
+		//	for (float column = -4.5f; column <= 4.5f; column += 0.5f)
+		//	{
+		//		glm::mat4 worldTransf = glm::translate(glm::mat4(1.0), glm::vec3(row, 0.0f, column));
+		//		shaderBlending.SetMat4("model", worldTransf);
+		//		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		//		worldTransf = glm::rotate(worldTransf, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//		shaderBlending.SetMat4("model", worldTransf);
+		//		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		//		worldTransf = glm::rotate(worldTransf, glm::radians(45.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//		shaderBlending.SetMat4("model", worldTransf);
+		//		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		//		worldTransf = glm::rotate(worldTransf, glm::radians(135.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//		shaderBlending.SetMat4("model", worldTransf);
+		//		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		//		worldTransf = glm::rotate(worldTransf, glm::radians(105.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//		shaderBlending.SetMat4("model", worldTransf);
+		//		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		//		worldTransf = glm::rotate(worldTransf, glm::radians(75.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//		shaderBlending.SetMat4("model", worldTransf);
+		//		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		//		worldTransf = glm::rotate(worldTransf, glm::radians(120.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//		shaderBlending.SetMat4("model", worldTransf);
+		//		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		//		/*worldTransf = glm::rotate(worldTransf, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		//		shaderBlending.SetMat4("model", worldTransf);
+		//		glDrawArrays(GL_TRIANGLES, 0, 6);*/
+		//	}
+
 		//---TRAIN VARIABLES---
 		float trainRotation = -10.0f;
 		glm::vec3 trainScale = glm::vec3(0.5f);
@@ -506,6 +594,7 @@ int main(int argc, char** argv)
 			renderModel(shadowMappingDepthShader, mountainModel, mountainsPositions[i] - glm::vec3(0.0f, 0.0f, 0.0f), mountainRotation, mountainsScales[i]);
 		}
 
+		//renderModel(shadowMappingDepthShader, stationModel, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, glm::vec3(1.0f));
 
 		glCullFace(GL_BACK);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -557,6 +646,16 @@ int main(int argc, char** argv)
 			renderModel(ModelShader, mountainModel, mountainsPositions[i] - glm::vec3(0.0f, 0.0f, 0.0f), mountainRotation, mountainsScales[i]);
 		}
 
+		//Station
+		renderModel(ModelShader, stationModel, glm::vec3(5.0f, -1.5f, 10.0f), 0.0f, glm::vec3(1.0f));
+
+		//Bench
+		renderModel(ModelShader, benchModel, glm::vec3(10.0f, -1.5f, 18.0f), -90.0f, glm::vec3(0.01f));
+
+		//Human
+		renderModel(ModelShader, humanModel, glm::vec3(8.0f, -1.5f, 18.0f), -90.0f, glm::vec3(0.01f));
+
+		//stationModel.Draw(ModelShader);
 		//-------------------------------------
 
 		glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f); // White light

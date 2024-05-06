@@ -12,5 +12,5 @@ newmtl Humano_01Business_01
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka maps\Humano_01Business_01_Diffuse01.jpg
-	map_Kd maps\Humano_01Business_01_Diffuse01.jpg
+	map_Ka Humano_01Business_01_Diffuse01.jpg
+	map_Kd Humano_01Business_01_Diffuse01.jpg

@@ -152,6 +152,49 @@ glm::vec3(-85.0f, -1.5f, -25.0f),
 glm::vec3(100.5f, -1.5f, 31.0f),
 };
 
+std::vector<glm::vec3> mountainsPositions =
+{
+	//glm::vec3(-20.5f, -1.55f, 10.0f),
+	glm::vec3(50.0f, -1.55f, -25.0f),
+	//glm::vec3(20.0f, -1.55f, 20.0f),
+	//glm::vec3(-35.0f, -1.55f, -15.0f),
+	//glm::vec3(-25.0f, -1.55f, -30.0f),
+	glm::vec3(-50.0f, -1.55f, -35.0f),
+	//far
+	/*glm::vec3(-30.0f, -1.55f, -150.0f),
+	glm::vec3(-15.0f, -1.55f, -145.0f),
+	glm::vec3(15.0f, -1.55f, -155.0f),*/
+
+	////far far
+	//glm::vec3(70.0f, -1.55f, 200.0f),
+	//glm::vec3(-70.0f, -1.55f, 200.0f),
+	//glm::vec3(90.0f, -1.55f, 160.0f),
+
+	//glm::vec3(160.0f, -1.55f, 100.0f),
+	//glm::vec3(-160.0f, -1.55f, 100.0f)
+};
+
+std::vector<glm::vec3> mountainsScales =
+{
+	//glm::vec3(0.05f),
+	glm::vec3(0.8f),
+	//glm::vec3(0.05f),
+	//glm::vec3(0.1f),
+	//glm::vec3(0.1f),
+	glm::vec3(0.6f),
+	//far
+	/*glm::vec3(0.6f),
+	glm::vec3(0.8f),
+	glm::vec3(0.7f),*/
+	////far far
+	//glm::vec3(0.6f),
+	//glm::vec3(0.6f),
+	//glm::vec3(0.8f),
+
+	//glm::vec3(0.4f),
+	//glm::vec3(0.4f)
+};
+
 float scaleFactor = 2.0f; // You can adjust this value according to your needs
 
 //std::vector<glm::vec3> trainPosition =
@@ -159,7 +202,7 @@ float scaleFactor = 2.0f; // You can adjust this value according to your needs
 //	glm::vec3(0.0f, -1.5f, 0.0f)
 //};
 
-Model railModel, trainModel, treeModel;
+Model railModel, trainModel, treeModel, mountainModel;
 MoveableObject trainVehicle, railVehicle;
 
 std::vector<std::string> facesDay
@@ -372,6 +415,8 @@ int main(int argc, char** argv)
 	//Tree model loading
 	treeModel = Model("Assets\\Tree\\Tree.obj");
 
+	mountainModel = Model("Assets\\Mountain\\mountain.obj");
+
 	while (!glfwWindowShouldClose(window))
 	{
 
@@ -453,6 +498,14 @@ int main(int argc, char** argv)
 		//	renderModel(shadowMappingDepthShader, railModel, railPosition, railRotation, railScale);
 		//}
 
+		float mountainRotation = 0.0f;
+		glm::vec3 mountainScale = glm::vec3(0.1f);
+
+		for (int i = 0; i < mountainsPositions.size(); i++)
+		{
+			renderModel(shadowMappingDepthShader, mountainModel, mountainsPositions[i] - glm::vec3(0.0f, 0.0f, 0.0f), mountainRotation, mountainsScales[i]);
+		}
+
 
 		glCullFace(GL_BACK);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -497,6 +550,11 @@ int main(int argc, char** argv)
 		for (int i = 0; i < treePositions.size(); i++)
 		{
 			renderModel(ModelShader, treeModel, treePositions[i] - glm::vec3(0.0f), treeRotation, treeScale);
+		}
+
+		for (int i = 0; i < mountainsPositions.size(); i++)
+		{
+			renderModel(ModelShader, mountainModel, mountainsPositions[i] - glm::vec3(0.0f, 0.0f, 0.0f), mountainRotation, mountainsScales[i]);
 		}
 
 		//-------------------------------------
@@ -565,13 +623,13 @@ void renderFloor()
 	if (planeVAO == 0)
 	{
 		float planeVertices[] = {
-			200.0f, -0.5f,  200.0f,  0.0f, 1.0f, 0.0f,  200.0f,  0.0f,
-			-200.0f, -0.5f,  200.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
-			-200.0f, -0.5f, -200.0f,  0.0f, 1.0f, 0.0f,   0.0f, 200.0f,
+			100.0f, -0.5f,  100.0f,  0.0f, 1.0f, 0.0f,  100.0f,  0.0f,
+			-100.0f, -0.5f,  100.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
+			-100.0f, -0.5f, -100.0f,  0.0f, 1.0f, 0.0f,   0.0f, 100.0f,
 
-			200.0f, -0.5f,  200.0f,  0.0f, 1.0f, 0.0f,  200.0f,  0.0f,
-			-200.0f, -0.5f, -200.0f,  0.0f, 1.0f, 0.0f,   0.0f, 200.0f,
-			200.0f, -0.5f, -200.0f,  0.0f, 1.0f, 0.0f,  200.0f, 200.0f
+			100.0f, -0.5f,  100.0f,  0.0f, 1.0f, 0.0f,  100.0f,  0.0f,
+			-100.0f, -0.5f, -100.0f,  0.0f, 1.0f, 0.0f,   0.0f, 100.0f,
+			100.0f, -0.5f, -100.0f,  0.0f, 1.0f, 0.0f,  100.0f, 100.0f
 		};
 		// plane VAO
 		glGenVertexArrays(1, &planeVAO);

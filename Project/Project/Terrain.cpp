@@ -8,16 +8,20 @@ Terrain::Terrain()
 void Terrain::initialize(GLuint texture)
 {
 	textureID = texture;
-	Chunk chunk;
+	Chunk chunk, chunk2;
 	chunk.initialize(textureID, 100.0f, 3.5f, -100.0f);
 	chunks.push_back(chunk);
+	chunk2.initialize(textureID, 100.0f, 3.5f, -300.0f);
+	chunks.push_back(chunk2);
 }
 
 void Terrain::addChunk()
 {
 	Chunk chunk;
-	chunk.initialize(chunks.back().getTextureID(), chunks.back().getXPosition(), chunks.back().getYPosition() + 2.f, chunks.back().getZPosition() - 200.0f);
+	chunk.initialize(chunks.back().getTextureID(), chunks.back().getX(), chunks.back().getY(), chunks.back().getZ() - 200.0f);
 	chunks.push_back(chunk);
+
+	deleteChunk();
 }
 
 void Terrain::render()

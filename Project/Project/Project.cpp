@@ -24,6 +24,7 @@
 #include "Camera.h"
 #include "Shader.h"
 #include "MoveableObject.h"
+#include "Terrain.h"
 
 #pragma comment (lib, "glfw3dll.lib")
 #pragma comment (lib, "glew32.lib")
@@ -70,6 +71,7 @@ Camera* pCamera = nullptr;
 bool freeCameraView = true;
 
 MoveableObject* currentObject;
+Terrain terrain;
 
 unsigned int CreateTexture(const std::string& strTexturePath)
 {
@@ -118,7 +120,6 @@ void processInput(GLFWwindow* window);
 
 
 void renderScene(const Shader& shader);
-void renderFloor();
 void renderModel(Shader& ourShader, Model& ourModel, const glm::vec3& position, float rotationAngle, const glm::vec3& scale);
 
 
@@ -167,21 +168,21 @@ std::vector<glm::vec3> railPositions =
 std::vector<glm::vec3> treePositions =
 {
 	glm::vec3(5.0f, -1.5f, -20.0f),
-glm::vec3(14.5f, -1.5f, -12.0f),
-glm::vec3(-22.0f, -1.5f, 28.0f),
-glm::vec3(27.0f, -1.5f, -35.0f),
-glm::vec3(-39.0f, -1.5f, 50.0f),
-glm::vec3(43.0f, -1.5f, -45.0f),
-glm::vec3(51.0f, -1.5f, 20.0f),
-glm::vec3(-36.5f, -1.5f, -13.0f),
-glm::vec3(12.0f, -1.5f, 52.0f),
-glm::vec3(110.0f, -1.5f, -83.0f),
-glm::vec3(-24.0f, -1.5f, 18.0f),
-glm::vec3(48.0f, -1.5f, -20.0f),
-glm::vec3(-63.0f, -1.5f, 15.0f),
-glm::vec3(76.0f, -1.5f, -10.0f),
-glm::vec3(-85.0f, -1.5f, -25.0f),
-glm::vec3(100.5f, -1.5f, 31.0f),
+	glm::vec3(14.5f, -1.5f, -12.0f),
+	glm::vec3(-22.0f, -1.5f, 28.0f),
+	glm::vec3(27.0f, -1.5f, -35.0f),
+	glm::vec3(-39.0f, -1.5f, 50.0f),
+	glm::vec3(43.0f, -1.5f, -45.0f),
+	glm::vec3(51.0f, -1.5f, 20.0f),
+	glm::vec3(-36.5f, -1.5f, -13.0f),
+	glm::vec3(12.0f, -1.5f, 52.0f),
+	glm::vec3(110.0f, -1.5f, -83.0f),
+	glm::vec3(-24.0f, -1.5f, 18.0f),
+	glm::vec3(48.0f, -1.5f, -20.0f),
+	glm::vec3(-63.0f, -1.5f, 15.0f),
+	glm::vec3(76.0f, -1.5f, -10.0f),
+	glm::vec3(-85.0f, -1.5f, -25.0f),
+	glm::vec3(100.5f, -1.5f, 31.0f),
 };
 
 std::vector<glm::vec3> mountainsPositions =
@@ -240,7 +241,7 @@ float scaleFactor = 2.0f; // You can adjust this value according to your needs
 //	glm::vec3(0.0f, -1.5f, 0.0f)
 //};
 
-Model railModel, trainModel, treeModel, mountainModel,stationModel, benchModel, humanModel, warModel;
+Model railModel, trainModel, treeModel, mountainModel, stationModel, benchModel, humanModel, warModel;
 MoveableObject trainVehicle, railVehicle;
 
 std::vector<std::string> facesDay
@@ -442,6 +443,9 @@ int main(int argc, char** argv)
 		}
 	}
 
+	//Terrain loading
+	terrain.initialize(floorTexture);
+	float chunkBorder = -100.0f;
 
 	//Train model loading
 	trainModel = Model("Assets\\Train\\electrictrain.obj");
@@ -516,6 +520,13 @@ int main(int argc, char** argv)
 		// input
 		// -----
 		processInput(window);
+
+		// Terrain update
+		if (trainZ <= chunkBorder && trainZ >= chunkBorder - 0.2f)
+		{
+			terrain.addChunk();
+			chunkBorder -= 200.0f;
+		}
 
 		// render
 		// ------
@@ -654,6 +665,7 @@ int main(int argc, char** argv)
 		glBindTexture(GL_TEXTURE_2D, depthMap);
 		glDisable(GL_CULL_FACE);
 		renderScene(shadowMappingShader);
+		terrain.render();
 
 		//-----TRAIN AND RAILS RENDERING------
 		renderModel(ModelShader, trainVehicle.GetVehicleModel(), trainVehicle.GetPosition(), trainVehicle.GetRotation() - 1, trainScale);
@@ -738,49 +750,13 @@ int main(int argc, char** argv)
 // --------------------
 void renderScene(const Shader& shader)
 {
-	// floor
 	glm::mat4 model;
 	float deltaY = -1.0f;
 	model = glm::translate(model, glm::vec3(0.0f, deltaY, 0.0f));
 	shader.SetMat4("model", model);
-	renderFloor();
 }
 
-unsigned int planeVAO = 0;
 
-void renderFloor()
-{
-	unsigned int planeVBO;
-
-	if (planeVAO == 0)
-	{
-		float planeVertices[] = {
-			100.0f, -0.5f,  100.0f,  0.0f, 1.0f, 0.0f,  100.0f,  0.0f,
-			-100.0f, -0.5f,  100.0f,  0.0f, 1.0f, 0.0f,   0.0f,  0.0f,
-			-100.0f, -0.5f, -100.0f,  0.0f, 1.0f, 0.0f,   0.0f, 100.0f,
-
-			100.0f, -0.5f,  100.0f,  0.0f, 1.0f, 0.0f,  100.0f,  0.0f,
-			-100.0f, -0.5f, -100.0f,  0.0f, 1.0f, 0.0f,   0.0f, 100.0f,
-			100.0f, -0.5f, -100.0f,  0.0f, 1.0f, 0.0f,  100.0f, 100.0f
-		};
-		// plane VAO
-		glGenVertexArrays(1, &planeVAO);
-		glGenBuffers(1, &planeVBO);
-		glBindVertexArray(planeVAO);
-		glBindBuffer(GL_ARRAY_BUFFER, planeVBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(planeVertices), planeVertices, GL_STATIC_DRAW);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-		glBindVertexArray(0);
-	}
-
-	glBindVertexArray(planeVAO);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-}
 unsigned int modelVAO = 0;
 unsigned int modelVBO = 0;
 unsigned int modelEBO;
@@ -803,8 +779,6 @@ void renderModel(Shader& ourShader, Model& ourModel, const glm::vec3& position, 
 	ourShader.SetMat4("projection", projectionMatrix);
 
 	ourModel.Draw(ourShader);
-
-
 }
 
 bool isTrainSoundPlaying = false;
@@ -840,6 +814,7 @@ void processInput(GLFWwindow* window)
 		pCamera->SetFreeCamera(true);
 	}
 
+	//-----------------TRAIN MOVEMENT-----------------
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
 		trainVehicle.ProcessKeyboard(V_FORWARD, (float)deltaTime);
@@ -848,6 +823,7 @@ void processInput(GLFWwindow* window)
 			setTrainSound(true);
 			isTrainSoundPlaying = true;
 		}
+		trainZ = trainVehicle.GetPosition().z;
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
@@ -857,7 +833,12 @@ void processInput(GLFWwindow* window)
 			setTrainSound(true);
 			isTrainSoundPlaying = true;
 		}
+		trainZ = trainVehicle.GetPosition().z;
 	}
+	//------------------------------------------------
+
+
+	//-----------------FREE CAMERA MOVEMENT-----------------
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		pCamera->ProcessKeyboard(LEFT, (float)deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
@@ -875,7 +856,6 @@ void processInput(GLFWwindow* window)
 		int width, height;
 		glfwGetWindowSize(window, &width, &height);
 		pCamera->Reset(width, height);
-
 	}
 }
 

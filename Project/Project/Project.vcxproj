@@ -71,20 +71,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>.\..\_external\assimp\include;.\..\_external\stb;.\..\_external\glm;.\..\_external\glfw\include\GLFW;.\..\_external\glew-2.1.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>.\..\_external\assimp\lib;.\..\_external\glew-2.1.0\lib;.\..\_external\glfw\lib-vc2022;.\..\_external\glew-2.1.0\lib\Release\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>.\..\_external\irrKlang-64bit-1.6.0\include;.\..\_external\assimp\include;.\..\_external\stb;.\..\_external\glm;.\..\_external\glfw\include\GLFW;.\..\_external\glew-2.1.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>.\..\_external\irrKlang-64bit-1.6.0\lib\Winx64-visualStudio;.\..\_external\assimp\lib;.\..\_external\glew-2.1.0\lib;.\..\_external\glfw\lib-vc2022;.\..\_external\glew-2.1.0\lib\Release\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>.\..\_external\assimp\include;.\..\_external\stb;.\..\_external\glm;.\..\_external\glfw\include\GLFW;.\..\_external\glew-2.1.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>.\..\_external\assimp\lib;.\..\_external\glew-2.1.0\lib;.\..\_external\glfw\lib-vc2022;.\..\_external\glew-2.1.0\lib\Release\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>.\..\_external\irrKlang-64bit-1.6.0\include;.\..\_external\assimp\include;.\..\_external\stb;.\..\_external\glm;.\..\_external\glfw\include\GLFW;.\..\_external\glew-2.1.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>.\..\_external\irrKlang-64bit-1.6.0\lib\Winx64-visualStudio;.\..\_external\assimp\lib;.\..\_external\glew-2.1.0\lib;.\..\_external\glfw\lib-vc2022;.\..\_external\glew-2.1.0\lib\Release\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>.\..\_external\assimp\include;.\..\_external\stb;.\..\_external\glm;.\..\_external\glfw-3.4.bin.WIN64\include\GLFW;.\..\_external\glew\include;$(IncludePath)</IncludePath>
-    <LibraryPath>.\..\_external\assimp\lib;.\..\_external\glew-2.1.0\lib;.\..\_external\glfw\lib-vc2022;.\..\_external\glew\lib\Release\x64;.\..\_external\glfw-3.4.bin.WIN64\lib-vc2022;$(LibraryPath)</LibraryPath>
+    <IncludePath>.\..\_external\irrKlang-64bit-1.6.0\include;.\..\_external\assimp\include;.\..\_external\stb;.\..\_external\glm;.\..\_external\glfw-3.4.bin.WIN64\include\GLFW;.\..\_external\glew\include;$(IncludePath)</IncludePath>
+    <LibraryPath>.\..\_external\irrKlang-64bit-1.6.0\lib\Winx64-visualStudio;.\..\_external\assimp\lib;.\..\_external\glew-2.1.0\lib;.\..\_external\glfw\lib-vc2022;.\..\_external\glew\lib\Release\x64;.\..\_external\glfw-3.4.bin.WIN64\lib-vc2022;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>.\..\_external\assimp\include;.\..\_external\stb;.\..\_external\glm;.\..\_external\glfw\include\GLFW;.\..\_external\glew-2.1.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>.\..\_external\assimp\lib;.\..\_external\glew-2.1.0\lib;.\..\_external\glfw\lib-vc2022;.\..\_external\glew-2.1.0\lib\Release\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>.\..\_external\irrKlang-64bit-1.6.0\include;.\..\_external\assimp\include;.\..\_external\stb;.\..\_external\glm;.\..\_external\glfw\include\GLFW;.\..\_external\glew-2.1.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>.\..\_external\irrKlang-64bit-1.6.0\lib\Winx64-visualStudio;.\..\_external\assimp\lib;.\..\_external\glew-2.1.0\lib;.\..\_external\glfw\lib-vc2022;.\..\_external\glew-2.1.0\lib\Release\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 
-
+#include<irrKlang.h>
 #include <GL/glew.h>
 
 #define GLM_FORCE_CTOR_INIT 
@@ -28,6 +28,38 @@
 #pragma comment (lib, "glfw3dll.lib")
 #pragma comment (lib, "glew32.lib")
 #pragma comment (lib, "OpenGL32.lib")
+#pragma comment (lib, "irrKlang.lib")
+
+using namespace irrklang;
+ISoundEngine* SoundEngine = createIrrKlangDevice();
+ISoundEngine* TrainSoundEngine = createIrrKlangDevice();
+
+void SetOutsideSound(bool day)
+{
+	SoundEngine->removeAllSoundSources();
+	if (day)
+	{
+		SoundEngine->play2D("Assets\\Audio\\day.mp3", true);
+		SoundEngine->setSoundVolume(0.8);
+	}
+	else
+	{
+		SoundEngine->play2D("Resources/audio/night.mp3", true);
+		SoundEngine->setSoundVolume(0.4);
+	}
+}
+
+void setTrainSound(bool move) {
+	TrainSoundEngine->removeAllSoundSources();
+	if (move) {
+		TrainSoundEngine->play2D("Assets\\Audio\\train.wav", true);
+		TrainSoundEngine->setSoundVolume(0.9);
+	}
+	else {
+		TrainSoundEngine->removeAllSoundSources();
+		TrainSoundEngine->setAllSoundsPaused();
+	}
+}
 
 const unsigned int SCR_WIDTH = 1800;
 const unsigned int SCR_HEIGHT = 1080;
@@ -208,7 +240,7 @@ float scaleFactor = 2.0f; // You can adjust this value according to your needs
 //	glm::vec3(0.0f, -1.5f, 0.0f)
 //};
 
-Model railModel, trainModel, treeModel, mountainModel,stationModel, benchModel, humanModel;
+Model railModel, trainModel, treeModel, mountainModel,stationModel, benchModel, humanModel, warModel;
 MoveableObject trainVehicle, railVehicle;
 
 std::vector<std::string> facesDay
@@ -241,6 +273,7 @@ float trainZ = 0.0f;
 
 int main(int argc, char** argv)
 {
+	SetOutsideSound(true);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_DEPTH_TEST);
@@ -433,6 +466,7 @@ int main(int argc, char** argv)
 	//Human model loading
 	humanModel = Model("Assets\\Human\\Humano_01Business_01_30K.obj");
 
+
 	// Grass vertices
 	//float grassVertices[] = {
 	//	// positions          // texture Coords 
@@ -466,7 +500,6 @@ int main(int argc, char** argv)
 
 	while (!glfwWindowShouldClose(window))
 	{
-
 		glBindVertexArray(skyboxVAO);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
@@ -774,6 +807,7 @@ void renderModel(Shader& ourShader, Model& ourModel, const glm::vec3& position, 
 
 }
 
+bool isTrainSoundPlaying = false;
 
 void processInput(GLFWwindow* window)
 {
@@ -799,7 +833,6 @@ void processInput(GLFWwindow* window)
 		freeCameraView = false;
 		pCamera->SetFreeCamera(false);
 	}
-
 	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
 	{
 		freeCameraView = true;
@@ -807,27 +840,24 @@ void processInput(GLFWwindow* window)
 		pCamera->SetFreeCamera(true);
 	}
 
-	//train Movement
-	//if (isTrainMoving)
-	//{
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
 		trainVehicle.ProcessKeyboard(V_FORWARD, (float)deltaTime);
+		if (!isTrainSoundPlaying)
+		{
+			setTrainSound(true);
+			isTrainSoundPlaying = true;
+		}
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
 		trainVehicle.ProcessKeyboard(V_BACKWARD, (float)deltaTime);
+		if (!isTrainSoundPlaying)
+		{
+			setTrainSound(true);
+			isTrainSoundPlaying = true;
+		}
 	}
-	/*if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-	{
-		trainVehicle.ProcessKeyboard(V_LEFT, (float)deltaTime);
-	}*/
-	/*if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-	{
-		tankVehicle.ProcessKeyboard(V_RIGHT, (float)deltaTime);
-	}*/
-	//}
-
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		pCamera->ProcessKeyboard(LEFT, (float)deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)

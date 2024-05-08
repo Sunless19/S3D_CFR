@@ -522,7 +522,7 @@ int main(int argc, char** argv)
 		processInput(window);
 
 		// Terrain update
-		if (trainZ <= chunkBorder && trainZ >= chunkBorder - 0.2f)
+		if (trainZ <= chunkBorder && trainZ >= chunkBorder - 0.3f)
 		{
 			terrain.addChunk();
 			chunkBorder -= 200.0f;
@@ -635,7 +635,7 @@ int main(int argc, char** argv)
 
 		for (int i = 0; i < mountainsPositions.size(); i++)
 		{
-			renderModel(shadowMappingDepthShader, mountainModel, mountainsPositions[i] - glm::vec3(0.0f, 0.0f, 0.0f), mountainRotation, mountainsScales[i]);
+			renderModel(shadowMappingDepthShader, mountainModel, mountainsPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), mountainRotation, mountainsScales[i]);
 		}
 
 		//renderModel(shadowMappingDepthShader, stationModel, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, glm::vec3(1.0f));
@@ -677,28 +677,28 @@ int main(int argc, char** argv)
 		//renderModel(ModelShader, railVehicle.GetVehicleModel(), railVehicle.GetPosition(), railVehicle.GetRotation(), railScale);
 		for (int i = 0; i < railPositions.size(); i++)
 		{
-			renderModel(ModelShader, railModel, railPositions[i] - glm::vec3(0.0f), railRotation, railScale);
+			renderModel(ModelShader, railModel, railPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), railRotation, railScale);
 		}
 
 
 		for (int i = 0; i < treePositions.size(); i++)
 		{
-			renderModel(ModelShader, treeModel, treePositions[i] - glm::vec3(0.0f), treeRotation, treeScale);
+			renderModel(ModelShader, treeModel, treePositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), treeRotation, treeScale);
 		}
 
 		for (int i = 0; i < mountainsPositions.size(); i++)
 		{
-			renderModel(ModelShader, mountainModel, mountainsPositions[i] - glm::vec3(0.0f, 0.0f, 0.0f), mountainRotation, mountainsScales[i]);
+			renderModel(ModelShader, mountainModel, mountainsPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), mountainRotation, mountainsScales[i]);
 		}
 
 		//Station
-		renderModel(ModelShader, stationModel, glm::vec3(5.0f, -1.5f, 10.0f), 0.0f, glm::vec3(1.0f));
+		renderModel(ModelShader, stationModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), 0.0f, glm::vec3(1.0f));
 
 		//Bench
-		renderModel(ModelShader, benchModel, glm::vec3(10.0f, -1.5f, 18.0f), -90.0f, glm::vec3(0.01f));
+		renderModel(ModelShader, benchModel, glm::vec3(10.0f, -1.5f, 18.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), -90.0f, glm::vec3(0.01f));
 
 		//Human
-		renderModel(ModelShader, humanModel, glm::vec3(8.0f, -1.5f, 18.0f), -90.0f, glm::vec3(0.01f));
+		renderModel(ModelShader, humanModel, glm::vec3(8.0f, -1.5f, 18.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), -90.0f, glm::vec3(0.01f));
 
 		//stationModel.Draw(ModelShader);
 		//-------------------------------------

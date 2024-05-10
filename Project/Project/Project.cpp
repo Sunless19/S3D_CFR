@@ -165,34 +165,46 @@ std::vector<glm::vec3> railPositions =
 	glm::vec3(0.0f, -1.5f, -180.0f),
 };
 
+std::vector<glm::vec3> forestTreePositions =
+{
+	glm::vec3(-74.0f, -1.5f, -28.0f),
+	glm::vec3(-92.0f, -1.5f, -75.0f),
+	glm::vec3(-16.0f, -1.5f, -35.0f),
+	glm::vec3(-2.0f, -1.5f, -16.0f),
+	glm::vec3(-47.0f, -1.5f, -33.0f),
+
+	glm::vec3(-12.0f, -1.5f, 53.0f),
+	glm::vec3(-45.0f, -1.5f, 92.0f),
+	glm::vec3(-34.0f, -1.5f, 71.0f),
+	glm::vec3(-53.0f, -1.5f, 25.0f),
+
+
+};
+
 std::vector<glm::vec3> treePositions =
 {
-	glm::vec3(5.0f, -1.5f, -20.0f),
-	glm::vec3(14.5f, -1.5f, -12.0f),
-	glm::vec3(-22.0f, -1.5f, 28.0f),
-	glm::vec3(27.0f, -1.5f, -35.0f),
 	glm::vec3(-39.0f, -1.5f, 50.0f),
-	glm::vec3(43.0f, -1.5f, -45.0f),
-	glm::vec3(51.0f, -1.5f, 20.0f),
-	glm::vec3(-36.5f, -1.5f, -13.0f),
-	glm::vec3(12.0f, -1.5f, 52.0f),
-	glm::vec3(110.0f, -1.5f, -83.0f),
-	glm::vec3(-24.0f, -1.5f, 18.0f),
-	glm::vec3(48.0f, -1.5f, -20.0f),
-	glm::vec3(-63.0f, -1.5f, 15.0f),
-	glm::vec3(76.0f, -1.5f, -10.0f),
-	glm::vec3(-85.0f, -1.5f, -25.0f),
-	glm::vec3(100.5f, -1.5f, 31.0f),
+	//glm::vec3(43.0f, -1.5f, -45.0f),
+	//glm::vec3(51.0f, -1.5f, 20.0f),
+	//glm::vec3(-36.5f, -1.5f, -13.0f),
+	//glm::vec3(12.0f, -1.5f, 52.0f),
+	//glm::vec3(110.0f, -1.5f, -83.0f),
+	//glm::vec3(-24.0f, -1.5f, 18.0f),
+	//glm::vec3(48.0f, -1.5f, -20.0f),
+	//glm::vec3(-63.0f, -1.5f, 15.0f),
+	//glm::vec3(76.0f, -1.5f, -10.0f),
+	//glm::vec3(-85.0f, -1.5f, -25.0f),
+	//glm::vec3(100.5f, -1.5f, 31.0f),
 };
 
 std::vector<glm::vec3> mountainsPositions =
 {
-	//glm::vec3(-20.5f, -1.55f, 10.0f),
 	glm::vec3(50.0f, -1.55f, -25.0f),
+	glm::vec3(-50.0f, -1.55f, -35.0f),
+	//glm::vec3(-20.5f, -1.55f, 10.0f),
 	//glm::vec3(20.0f, -1.55f, 20.0f),
 	//glm::vec3(-35.0f, -1.55f, -15.0f),
 	//glm::vec3(-25.0f, -1.55f, -30.0f),
-	glm::vec3(-50.0f, -1.55f, -35.0f),
 	//far
 	/*glm::vec3(-30.0f, -1.55f, -150.0f),
 	glm::vec3(-15.0f, -1.55f, -145.0f),
@@ -445,7 +457,8 @@ int main(int argc, char** argv)
 
 	//Terrain loading
 	terrain.initialize(floorTexture);
-	float chunkBorder = -100.0f;
+	float chunkBorder = -125.0f;
+	bool hasStation = true;
 
 	//Train model loading
 	trainModel = Model("Assets\\Train\\electrictrain.obj");
@@ -526,6 +539,16 @@ int main(int argc, char** argv)
 		{
 			terrain.addChunk();
 			chunkBorder -= 200.0f;
+
+			switch (hasStation)
+			{
+			case true:
+				hasStation = false;
+				break;
+			case false:
+				hasStation = true;
+				break;
+			}
 		}
 
 		// render
@@ -635,7 +658,7 @@ int main(int argc, char** argv)
 
 		for (int i = 0; i < mountainsPositions.size(); i++)
 		{
-			renderModel(shadowMappingDepthShader, mountainModel, mountainsPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), mountainRotation, mountainsScales[i]);
+			renderModel(shadowMappingDepthShader, mountainModel, mountainsPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 125.0f), mountainRotation, mountainsScales[i]);
 		}
 
 		//renderModel(shadowMappingDepthShader, stationModel, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, glm::vec3(1.0f));
@@ -677,28 +700,43 @@ int main(int argc, char** argv)
 		//renderModel(ModelShader, railVehicle.GetVehicleModel(), railVehicle.GetPosition(), railVehicle.GetRotation(), railScale);
 		for (int i = 0; i < railPositions.size(); i++)
 		{
-			renderModel(ModelShader, railModel, railPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), railRotation, railScale);
+			renderModel(ModelShader, railModel, railPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 75.0f), railRotation, railScale);
 		}
 
 
-		for (int i = 0; i < treePositions.size(); i++)
+		switch (hasStation)
 		{
-			renderModel(ModelShader, treeModel, treePositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), treeRotation, treeScale);
+		case true:
+			//Station
+			renderModel(ModelShader, stationModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 125.0f), 0.0f, glm::vec3(1.0f));
+
+			//Bench
+			renderModel(ModelShader, benchModel, glm::vec3(10.0f, -1.5f, 18.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 125.0f), -90.0f, glm::vec3(0.01f));
+
+			//Human
+			renderModel(ModelShader, humanModel, glm::vec3(8.0f, -1.5f, 18.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 125.0f), -90.0f, glm::vec3(0.01f));
+
+
+
+			break;
+
+		case false:
+
+
+			for (int i = 0; i < forestTreePositions.size(); i++)
+			{
+				renderModel(ModelShader, treeModel, forestTreePositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 125.0f), treeRotation, treeScale);
+			}
+
+			for (int i = 0; i < mountainsPositions.size(); i++)
+			{
+				renderModel(ModelShader, mountainModel, mountainsPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 125.0f), mountainRotation, mountainsScales[i]);
+			}
+
+			break;
 		}
 
-		for (int i = 0; i < mountainsPositions.size(); i++)
-		{
-			renderModel(ModelShader, mountainModel, mountainsPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), mountainRotation, mountainsScales[i]);
-		}
 
-		//Station
-		renderModel(ModelShader, stationModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), 0.0f, glm::vec3(1.0f));
-
-		//Bench
-		renderModel(ModelShader, benchModel, glm::vec3(10.0f, -1.5f, 18.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), -90.0f, glm::vec3(0.01f));
-
-		//Human
-		renderModel(ModelShader, humanModel, glm::vec3(8.0f, -1.5f, 18.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), -90.0f, glm::vec3(0.01f));
 
 		//stationModel.Draw(ModelShader);
 		//-------------------------------------

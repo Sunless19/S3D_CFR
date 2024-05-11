@@ -13,6 +13,7 @@ public:
 	void render();
 	void clean();
 
+	void setTexture(GLuint texture);
 	std::vector<Chunk> getChunks();
 
 private:

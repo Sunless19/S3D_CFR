@@ -1,0 +1,79 @@
+# Blender 4.1.1 MTL File: 'help.blend'
+# www.blender.org
+
+newmtl Bark
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd bark2.jpg
+map_Bump bark2.jpg
+
+newmtl Bark2
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd tilebark.jpg
+map_Bump tilebark.jpg
+
+newmtl DeadBark
+Ns 292.156860
+Ka 1.000000 1.000000 1.000000
+Ks 0.059489 0.059489 0.059489
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd bark.jpg
+map_Bump bark.jpg
+
+newmtl FirBark
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd bark.jpg
+map_Bump bark.jpg
+
+newmtl FirLeaves
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd fir_branch.png
+map_Bump fir_branch.png
+
+newmtl Leaves
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd branch3.png
+map_Bump branch3.png
+
+newmtl Leaves2
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd branch2.png
+map_Bump branch2.png

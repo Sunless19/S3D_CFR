@@ -18,7 +18,7 @@ void Terrain::initialize(GLuint texture)
 void Terrain::addChunk()
 {
 	Chunk chunk;
-	chunk.initialize(chunks.back().getTextureID(), chunks.back().getX(), chunks.back().getY(), chunks.back().getZ() - 200.0f);
+	chunk.initialize(textureID, chunks.back().getX(), chunks.back().getY(), chunks.back().getZ() - 200.0f);
 	chunks.push_back(chunk);
 
 	deleteChunk();
@@ -42,6 +42,11 @@ void Terrain::deleteChunk()
 {
 	chunks.front().clean();
 	chunks.erase(chunks.begin());
+}
+
+void Terrain::setTexture(GLuint texture)
+{
+	textureID = texture;
 }
 
 std::vector<Chunk> Terrain::getChunks()

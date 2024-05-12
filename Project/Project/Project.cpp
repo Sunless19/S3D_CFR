@@ -40,7 +40,7 @@ void SetOutsideSound(bool day)
 	SoundEngine->removeAllSoundSources();
 	if (day)
 	{
-		SoundEngine->play2D("Assets\\Audio\\day.mp3", true);
+		SoundEngine->play2D("Assets\\Audio\\Day.wav", true);
 		SoundEngine->setSoundVolume(0.8);
 	}
 	else
@@ -268,12 +268,12 @@ MoveableObject trainVehicle, railVehicle;
 
 std::vector<std::string> facesDay
 {
-	"skybox_images\\skybox_right.jpg",
-	"skybox_images\\skybox_left.jpg",
-	"skybox_images\\skybox_top.jpg",
-	"skybox_images\\skybox_bottom.jpg",
-	"skybox_images\\skybox_back.jpg",
-	"skybox_images\\skybox_front.jpg"
+	"skybox_images\\px.png",
+	"skybox_images\\nx.png",
+	"skybox_images\\py.png",
+	"skybox_images\\ny.png",
+	"skybox_images\\pz.png",
+	"skybox_images\\nz.png",
 };
 
 std::vector<std::string>facesNight

@@ -862,13 +862,8 @@ void processInput(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
 	{
 		freeCameraView = false;
-		pCamera->SetFreeCamera(false);
 	}
-	if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
-	{
-		freeCameraView = false;
-		pCamera->SetFreeCamera(false);
-	}
+
 	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
 	{
 		freeCameraView = true;
@@ -886,6 +881,8 @@ void processInput(GLFWwindow* window)
 			isTrainSoundPlaying = true;
 		}
 		trainZ = trainVehicle.GetPosition().z;
+		if(freeCameraView==false)
+		pCamera->set(SCR_WIDTH, SCR_HEIGHT, glm::vec3(trainVehicle.GetPosition().x,trainVehicle.GetPosition().y+6, trainVehicle.GetPosition().z));
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
@@ -896,22 +893,24 @@ void processInput(GLFWwindow* window)
 			isTrainSoundPlaying = true;
 		}
 		trainZ = trainVehicle.GetPosition().z;
+		if (freeCameraView == false)
+			pCamera->set(SCR_WIDTH, SCR_HEIGHT, glm::vec3(trainVehicle.GetPosition().x, trainVehicle.GetPosition().y + 6, trainVehicle.GetPosition().z));
 	}
 	//------------------------------------------------
 
 
 	//-----------------FREE CAMERA MOVEMENT-----------------
-	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS && freeCameraView == true)
 		pCamera->ProcessKeyboard(LEFT, (float)deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS && freeCameraView == true)
 		pCamera->ProcessKeyboard(RIGHT, (float)deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS && freeCameraView == true)
 		pCamera->ProcessKeyboard(FORWARD, (float)deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS && freeCameraView == true)
 		pCamera->ProcessKeyboard(BACKWARD, (float)deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_PAGE_UP) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_PAGE_UP) == GLFW_PRESS && freeCameraView)
 		pCamera->ProcessKeyboard(UP, (float)deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_PAGE_DOWN) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_PAGE_DOWN) == GLFW_PRESS && freeCameraView)
 		pCamera->ProcessKeyboard(DOWN, (float)deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
 	{
@@ -928,12 +927,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-	if (freeCameraView)
-		pCamera->MouseControl((float)xpos, (float)ypos);
+	pCamera->MouseControl((float)xpos, (float)ypos);
 }
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yOffset)
 {
-	if (freeCameraView)
-		pCamera->ProcessMouseScroll((float)yOffset);
+	pCamera->ProcessMouseScroll((float)yOffset);
 }

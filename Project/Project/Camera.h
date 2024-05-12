@@ -36,6 +36,8 @@ public:
 
     void Set(const int width, const int height, const glm::vec3& position);
 
+    void set(const int width, const int height, const glm::vec3& position);
+
     void Reset(const int width, const int height);
 
     void Reshape(int windowWidth, int windowHeight);
@@ -65,7 +67,7 @@ private:
 
     void UpdateCameraVectors();
 
-protected:
+public:
     const float cameraSpeedFactor = 20.5f;
     const float mouseSensitivity = 0.1f;
 

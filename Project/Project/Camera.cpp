@@ -29,6 +29,12 @@ void Camera::Set(const int width, const int height, const glm::vec3& position)
     UpdateCameraVectors();
 }
 
+void Camera::set(const int width, const int height, const glm::vec3& position)
+{
+    this->position = position;
+    UpdateCameraVectors();
+}
+
 void Camera::Reset(const int width, const int height)
 {
     Set(width, height, startPosition);

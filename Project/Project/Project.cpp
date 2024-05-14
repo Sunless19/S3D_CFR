@@ -488,10 +488,10 @@ int main(int argc, char** argv)
 	mountainModel = Model("Assets\\Mountain\\mountain.obj");
 
 	//Station model loading
-	BucurestiModel = Model("Assets\\BucurestiStation\\station.obj");
-	PloiestiModel = Model("Assets\\PloiestiStation\\station.obj");
-	SinaiaModel = Model("Assets\\SinaiaStation\\station.obj");
-	BrasovModel = Model("Assets\\BrasovStation\\station.obj");
+	BucurestiModel = Model("Assets\\TrainStations\\bucuresti_station.obj");
+	PloiestiModel = Model("Assets\\TrainStations\\ploiesti_station.obj");
+	SinaiaModel = Model("Assets\\TrainStations\\sinaia_station.obj");
+	BrasovModel = Model("Assets\\TrainStations\\brasov_station.obj");
 
 	std::vector<Model> stationModels = { BucurestiModel, PloiestiModel, SinaiaModel, BrasovModel };
 	stationCount = 0;

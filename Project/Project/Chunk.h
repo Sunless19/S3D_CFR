@@ -5,7 +5,7 @@
 
 class Chunk {
 private:
-	GLuint VAO, VBO, IBO;
+	GLuint VAO, VBO;
 	GLsizei indexCount;
 	GLuint textureID;
 	float position[3];

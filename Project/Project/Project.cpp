@@ -493,6 +493,9 @@ int main(int argc, char** argv)
 	SinaiaModel = Model("Assets\\SinaiaStation\\station.obj");
 	BrasovModel = Model("Assets\\BrasovStation\\station.obj");
 
+	std::vector<Model> stationModels = { BucurestiModel, PloiestiModel, SinaiaModel, BrasovModel };
+	stationCount = 0;
+
 	//Bench model loading
 	benchModel = Model("Assets\\Bench\\Bench_HighRes.obj");
 
@@ -560,6 +563,7 @@ int main(int argc, char** argv)
 			{
 			case true:
 				hasStation = false;
+				stationCount++;
 				break;
 			case false:
 				hasStation = true;
@@ -723,27 +727,9 @@ int main(int argc, char** argv)
 		switch (hasStation)
 		{
 		case true:
-			//if (stationCount == 0)
-			//{
-				//Station
-				renderModel(ModelShader, BucurestiModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), 0.0f, glm::vec3(1.0f));
-				//++stationCount;
-			//}
-			//else if (stationCount == 1)
-			//{
-				//renderModel(ModelShader, PloiestiModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), 0.0f, glm::vec3(1.0f));
-				//++stationCount;
-			//}
-			//else if (stationCount == 2)
-			//{
-				//renderModel(ModelShader, SinaiaModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), 0.0f, glm::vec3(1.0f));
-				//++stationCount;
-			//}
-			//else if (stationCount == 3)
-			//{
-				//renderModel(ModelShader, BrasovModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), 0.0f, glm::vec3(1.0f));
-				//++stationCount;
-			//}
+			//Station
+			if (stationCount < stationModels.size())
+				renderModel(ModelShader, stationModels[stationCount], glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), 0.0f, glm::vec3(1.0f));
 			//Bench
 			renderModel(ModelShader, benchModel, glm::vec3(10.0f, -1.5f, 18.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), -90.0f, glm::vec3(0.01f));
 
@@ -778,7 +764,8 @@ int main(int argc, char** argv)
 			}
 
 			//Station from far
-			renderModel(ModelShader, BucurestiModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder - 100.0f), 0.0f, glm::vec3(1.0f));
+			if (stationCount < stationModels.size())
+			renderModel(ModelShader, stationModels[stationCount], glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder - 100.0f), 0.0f, glm::vec3(1.0f));
 
 			break;
 		}
@@ -904,8 +891,8 @@ void processInput(GLFWwindow* window)
 			isTrainSoundPlaying = true;
 		}
 		trainZ = trainVehicle.GetPosition().z;
-		if(freeCameraView==false)
-		pCamera->set(SCR_WIDTH, SCR_HEIGHT, glm::vec3(trainVehicle.GetPosition().x,trainVehicle.GetPosition().y+6, trainVehicle.GetPosition().z));
+		if (freeCameraView == false)
+			pCamera->set(SCR_WIDTH, SCR_HEIGHT, glm::vec3(trainVehicle.GetPosition().x, trainVehicle.GetPosition().y + 6, trainVehicle.GetPosition().z));
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{

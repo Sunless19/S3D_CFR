@@ -50,11 +50,12 @@ public:
 
     float GetYaw();
 
+    void setSpeed(float);
 private:
     void UpdateObjectVectors();
 
 protected:
-    const float vehicleSpeedFactor = 12.5f;
+    float vehicleSpeedFactor = 12.5f;
 
     // Perspective properties
     float zNear;

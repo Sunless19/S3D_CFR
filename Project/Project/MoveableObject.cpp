@@ -106,6 +106,11 @@ float MoveableObject::GetYaw()
     return yaw;
 }
 
+void MoveableObject::setSpeed(float speed)
+{
+    this->vehicleSpeedFactor = speed;
+}
+
 void MoveableObject::UpdateObjectVectors()
 {
     // Calculate the new forward vector

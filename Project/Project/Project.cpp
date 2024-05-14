@@ -1,4 +1,4 @@
-#include <stdlib.h>
+﻿#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -66,6 +66,7 @@ const unsigned int SCR_WIDTH = 1800;
 const unsigned int SCR_HEIGHT = 1080;
 bool isDayTime = false;
 
+const float maxVisibilityDistance = 50.0f;
 
 Camera* pCamera = nullptr;
 bool freeCameraView = true;
@@ -534,6 +535,31 @@ int main(int argc, char** argv)
 	//Shader shaderBlending("Blending.vs", "Blending.fs");
 	//shaderBlending.SetInt("texture1", 0);
 
+	//Fog attempt #1
+	//GLfloat fogColor[] = { 0.5f, 0.5f, 0.5f, 1.0f }; // Culoarea ceții
+	//glFogi(GL_FOG_MODE, GL_LINEAR); // Modul de interpolare al ceții
+	//glFogfv(GL_FOG_COLOR, fogColor); // Setarea culorii ceții
+	//glFogf(GL_FOG_START, 10.0f); // Distanța de început a ceții
+	//glFogf(GL_FOG_END, 50.0f); // Distanța de sfârșit a ceții
+	//glEnable(GL_FOG); // Activarea ceții
+
+	//// În bucla while, înainte de desenarea scenei
+	//glClearColor(fogColor[0], fogColor[1], fogColor[2], fogColor[3]); // Setarea culorii de fundal la culoarea ceții pentru a integra uniform ceața în întreaga scenă
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//Fog attempt #2
+	float cameraDistance = glm::length(pCamera->GetPosition());
+
+	// În bucla while, după ce ai inițializat framebuffer-ul
+	float visibilityFactor = 0.5f;
+
+	// Setează factorul de încetosare și opacitate în shader-ul de umbră
+	shadowMappingDepthShader.SetFloat("visibilityFactor", visibilityFactor);
+
+	// Actualizează shader-ul principal și shader-ul skybox cu același factor de vizibilitate
+	ModelShader.SetFloat("visibilityFactor", visibilityFactor);
+	skyboxShader.SetFloat("visibilityFactor", visibilityFactor);
+
 	while (!glfwWindowShouldClose(window))
 	{
 		glBindVertexArray(skyboxVAO);
@@ -743,6 +769,16 @@ int main(int argc, char** argv)
 				renderModel(ModelShader, treeModel, forestTreePositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), treeRotation, treeScale);
 			}
 
+			for (int i = 0; i < forestTreePositions.size(); i++)
+			{
+				renderModel(ModelShader, forestModel, forestTreePositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), treeRotation, treeScale);
+
+				if (treeRotation <= 360.0f)
+					treeRotation += 90.0f;
+				else
+					treeRotation = 0.0f;
+			}
+
 			break;
 
 		case false:
@@ -884,6 +920,8 @@ void processInput(GLFWwindow* window)
 	//-----------------TRAIN MOVEMENT-----------------
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
+		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+			trainVehicle.setSpeed(20.5);
 		trainVehicle.ProcessKeyboard(V_FORWARD, (float)deltaTime);
 		if (!isTrainSoundPlaying)
 		{
@@ -893,9 +931,12 @@ void processInput(GLFWwindow* window)
 		trainZ = trainVehicle.GetPosition().z;
 		if (freeCameraView == false)
 			pCamera->set(SCR_WIDTH, SCR_HEIGHT, glm::vec3(trainVehicle.GetPosition().x, trainVehicle.GetPosition().y + 6, trainVehicle.GetPosition().z));
+		trainVehicle.setSpeed(12.5);
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
+		if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+		trainVehicle.setSpeed(20.5);
 		trainVehicle.ProcessKeyboard(V_BACKWARD, (float)deltaTime);
 		if (!isTrainSoundPlaying)
 		{
@@ -905,7 +946,9 @@ void processInput(GLFWwindow* window)
 		trainZ = trainVehicle.GetPosition().z;
 		if (freeCameraView == false)
 			pCamera->set(SCR_WIDTH, SCR_HEIGHT, glm::vec3(trainVehicle.GetPosition().x, trainVehicle.GetPosition().y + 6, trainVehicle.GetPosition().z));
+		trainVehicle.setSpeed(12.5);
 	}
+
 	//------------------------------------------------
 
 

@@ -467,7 +467,7 @@ int main(int argc, char** argv)
 
 	//Terrain loading
 	terrain.initialize(floorTexture);
-	float chunkBorder = -125.0f;
+	float chunkBorder = -100.0f;
 	bool hasStation = true;
 
 	//Train model loading
@@ -669,7 +669,7 @@ int main(int argc, char** argv)
 
 		for (int i = 0; i < mountainsPositions.size(); i++)
 		{
-			renderModel(shadowMappingDepthShader, mountainModel, mountainsPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 125.0f), mountainRotation, mountainsScales[i]);
+			renderModel(shadowMappingDepthShader, mountainModel, mountainsPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), mountainRotation, mountainsScales[i]);
 		}
 
 		//renderModel(shadowMappingDepthShader, stationModel, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, glm::vec3(1.0f));
@@ -711,7 +711,7 @@ int main(int argc, char** argv)
 		//renderModel(ModelShader, railVehicle.GetVehicleModel(), railVehicle.GetPosition(), railVehicle.GetRotation(), railScale);
 		for (int i = 0; i < railPositions.size(); i++)
 		{
-			renderModel(ModelShader, railModel, railPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 75.0f), railRotation, railScale);
+			renderModel(ModelShader, railModel, railPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 50.0f), railRotation, railScale);
 		}
 
 
@@ -719,19 +719,19 @@ int main(int argc, char** argv)
 		{
 		case true:
 			//Station
-			renderModel(ModelShader, stationModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 125.0f), 0.0f, glm::vec3(1.0f));
+			renderModel(ModelShader, stationModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), 0.0f, glm::vec3(1.0f));
 
 			//Bench
-			renderModel(ModelShader, benchModel, glm::vec3(10.0f, -1.5f, 18.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 125.0f), -90.0f, glm::vec3(0.01f));
+			renderModel(ModelShader, benchModel, glm::vec3(10.0f, -1.5f, 18.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), -90.0f, glm::vec3(0.01f));
 
 			//Human
-			renderModel(ModelShader, humanModel, glm::vec3(8.0f, -1.5f, 18.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 125.0f), -90.0f, glm::vec3(0.01f));
+			renderModel(ModelShader, humanModel, glm::vec3(8.0f, -1.5f, 18.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), -90.0f, glm::vec3(0.01f));
 
 
 			//Station trees
 			for (int i = 0; i < forestTreePositions.size(); i++)
 			{
-				renderModel(ModelShader, treeModel, forestTreePositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 125.0f), treeRotation, treeScale);
+				renderModel(ModelShader, treeModel, forestTreePositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), treeRotation, treeScale);
 			}
 
 			break;
@@ -740,7 +740,7 @@ int main(int argc, char** argv)
 			//Forest trees
 			for (int i = 0; i < forestTreePositions.size(); i++)
 			{
-				renderModel(ModelShader, forestModel, forestTreePositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 125.0f), treeRotation, treeScale);
+				renderModel(ModelShader, forestModel, forestTreePositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), treeRotation, treeScale);
 
 				if (treeRotation <= 360.0f)
 					treeRotation += 90.0f;
@@ -751,11 +751,11 @@ int main(int argc, char** argv)
 			//Mountains
 			for (int i = 0; i < mountainsPositions.size(); i++)
 			{
-				renderModel(ModelShader, mountainModel, mountainsPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 125.0f), mountainRotation, mountainsScales[i]);
+				renderModel(ModelShader, mountainModel, mountainsPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), mountainRotation, mountainsScales[i]);
 			}
 
 			//Station from far
-			renderModel(ModelShader, stationModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder - 75.0f), 0.0f, glm::vec3(1.0f));
+			renderModel(ModelShader, stationModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder - 100.0f), 0.0f, glm::vec3(1.0f));
 
 			break;
 		}
@@ -867,7 +867,7 @@ void processInput(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
 	{
 		freeCameraView = true;
-		pCamera->Reset(SCR_WIDTH, SCR_HEIGHT);
+		//pCamera->Reset(SCR_WIDTH, SCR_HEIGHT);
 		pCamera->SetFreeCamera(true);
 	}
 

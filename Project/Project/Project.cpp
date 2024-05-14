@@ -263,7 +263,7 @@ float scaleFactor = 2.0f; // You can adjust this value according to your needs
 //	glm::vec3(0.0f, -1.5f, 0.0f)
 //};
 
-Model railModel, trainModel, treeModel, mountainModel, stationModel, benchModel, humanModel, warModel, forestModel;
+Model railModel, trainModel, treeModel, mountainModel, stationModel, benchModel, humanModel, warModel, forestModel, BucurestiModel, PloiestiModel, SinaiaModel, BrasovModel;
 MoveableObject trainVehicle, railVehicle;
 
 std::vector<std::string> facesDay
@@ -293,6 +293,8 @@ float ambientFactor = 0.9;
 
 float trainX = 0.0f;
 float trainZ = 0.0f;
+
+int stationCount = 0;
 
 int main(int argc, char** argv)
 {
@@ -486,7 +488,10 @@ int main(int argc, char** argv)
 	mountainModel = Model("Assets\\Mountain\\mountain.obj");
 
 	//Station model loading
-	stationModel = Model("Assets\\Station\\station.obj");
+	BucurestiModel = Model("Assets\\BucurestiStation\\station.obj");
+	PloiestiModel = Model("Assets\\PloiestiStation\\station.obj");
+	SinaiaModel = Model("Assets\\SinaiaStation\\station.obj");
+	BrasovModel = Model("Assets\\BrasovStation\\station.obj");
 
 	//Bench model loading
 	benchModel = Model("Assets\\Bench\\Bench_HighRes.obj");
@@ -718,9 +723,27 @@ int main(int argc, char** argv)
 		switch (hasStation)
 		{
 		case true:
-			//Station
-			renderModel(ModelShader, stationModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), 0.0f, glm::vec3(1.0f));
-
+			//if (stationCount == 0)
+			//{
+				//Station
+				renderModel(ModelShader, BucurestiModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), 0.0f, glm::vec3(1.0f));
+				//++stationCount;
+			//}
+			//else if (stationCount == 1)
+			//{
+				//renderModel(ModelShader, PloiestiModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), 0.0f, glm::vec3(1.0f));
+				//++stationCount;
+			//}
+			//else if (stationCount == 2)
+			//{
+				//renderModel(ModelShader, SinaiaModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), 0.0f, glm::vec3(1.0f));
+				//++stationCount;
+			//}
+			//else if (stationCount == 3)
+			//{
+				//renderModel(ModelShader, BrasovModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), 0.0f, glm::vec3(1.0f));
+				//++stationCount;
+			//}
 			//Bench
 			renderModel(ModelShader, benchModel, glm::vec3(10.0f, -1.5f, 18.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), -90.0f, glm::vec3(0.01f));
 
@@ -755,7 +778,7 @@ int main(int argc, char** argv)
 			}
 
 			//Station from far
-			renderModel(ModelShader, stationModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder - 100.0f), 0.0f, glm::vec3(1.0f));
+			renderModel(ModelShader, BucurestiModel, glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder - 100.0f), 0.0f, glm::vec3(1.0f));
 
 			break;
 		}

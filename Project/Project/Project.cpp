@@ -319,7 +319,7 @@ int main(int argc, char** argv)
 	shadowMappingShader.SetInt("diffuseTexture", 0);
 	shadowMappingShader.SetInt("shadowMap", 1);
 
-	glm::vec3 lightPos(0.0f, 100.0f, 0.0f);
+	glm::vec3 lightPos(trainVehicle.GetPosition().x, 100.0f, trainVehicle.GetPosition().z);
 
 	glEnable(GL_CULL_FACE);
 
@@ -594,7 +594,7 @@ int main(int argc, char** argv)
 		shadowMappingShader.SetFloat("ambientFactor", ambientFactor);
 		// set light uniforms
 		shadowMappingShader.SetVec3("viewPos", pCamera->GetPosition());
-		shadowMappingShader.SetVec3("lightPos", lightPos);
+		shadowMappingShader.SetVec3("lightPos", glm::vec3(trainVehicle.GetPosition().x,100.f,trainVehicle.GetPosition().z));
 		shadowMappingShader.SetMat4("lightSpaceMatrix", lightSpaceMatrix);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, depthMap);

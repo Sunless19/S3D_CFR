@@ -314,22 +314,19 @@ int main(int argc, char** argv)
 	glReadBuffer(GL_NONE);
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+	glm::vec3 fogColor(0.5f, 0.5f, 0.5f); // Example fog color, adjust as needed 
 	// shader configuration
 	shadowMappingShader.Use();
 	shadowMappingShader.SetInt("diffuseTexture", 0);
 	shadowMappingShader.SetInt("shadowMap", 1);
-	
 	shadowMappingShader.SetFloat("ambientFactor", 0.1f); // Adjust as needed
-	
-	glm::vec3 fogColor(0.5f, 0.5f, 0.5f); // Example fog color, adjust as needed
 	shadowMappingShader.SetVec3("fogColor", fogColor);
 	shadowMappingShader.SetFloat("fogStart", 75.0f);    // Distance at which fog starts
 	shadowMappingShader.SetFloat("fogEnd", 150.0f);      // Distance at which fog completely obscures objects
-
-	
 	shadowMappingShader.SetInt("diffuseTexture", 0);
 	shadowMappingShader.SetInt("shadowMap", 1);
-
+	
+	//lightPos over the train to follow it
 	glm::vec3 lightPos(trainVehicle.GetPosition().x, 100.0f, trainVehicle.GetPosition().z);
 
 	glEnable(GL_CULL_FACE);
@@ -446,38 +443,6 @@ int main(int argc, char** argv)
 	//Human model loading
 	humanModel = Model("Assets\\Human\\Humano_01Business_01_30K.obj");
 
-	//// Grass VAO si VBO
-	//unsigned int grassVAO, grassVBO;
-	//glGenVertexArrays(1, &grassVAO);
-	//glGenBuffers(1, &grassVBO);
-	//glBindVertexArray(grassVAO);
-	//glBindBuffer(GL_ARRAY_BUFFER, grassVBO);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(grassVertices), &grassVertices, GL_STATIC_DRAW);
-	//glEnableVertexAttribArray(0);
-	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-	//glEnableVertexAttribArray(1);
-	//glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-
-	//// Grass texture
-	//unsigned int grassTexture = CreateTexture(strExePath + "\\grass3.png");
-
-	//Shader shaderFloor("Floor.vs", "Floor.fs");
-	//Shader shaderBlending("Blending.vs", "Blending.fs");
-	//shaderBlending.SetInt("texture1", 0);
-
-	//Fog attempt #1
-	//GLfloat fogColor[] = { 0.5f, 0.5f, 0.5f, 1.0f }; // Culoarea ceții
-	//glFogi(GL_FOG_MODE, GL_LINEAR); // Modul de interpolare al ceții
-	//glFogfv(GL_FOG_COLOR, fogColor); // Setarea culorii ceții
-	//glFogf(GL_FOG_START, 10.0f); // Distanța de început a ceții
-	//glFogf(GL_FOG_END, 50.0f); // Distanța de sfârșit a ceții
-	//glEnable(GL_FOG); // Activarea ceții
-
-	//// În bucla while, înainte de desenarea scenei
-	//glClearColor(fogColor[0], fogColor[1], fogColor[2], fogColor[3]); // Setarea culorii de fundal la culoarea ceții pentru a integra uniform ceața în întreaga scenă
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
 	while (!glfwWindowShouldClose(window))
 	{
 		glBindVertexArray(skyboxVAO);
@@ -563,20 +528,6 @@ int main(int argc, char** argv)
 		{
 			renderModel(shadowMappingDepthShader, mountainModel, mountainsPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), mountainRotation, mountainsScales[i]);
 		}
-
-		//TRAIN AND RAILS SHADOW RENDERING
-
-		//renderModel(shadowMappingDepthShader, trainVehicle.GetVehicleModel(), trainVehicle.GetPosition(), trainVehicle.GetRotation(), glm::vec3(1.0f));
-		//for (auto& trainPosition : trainPosition)
-		//{
-		//	renderModel(shadowMappingDepthShader, trainModel, trainPosition, trainRotation, trainScale);
-		//}
-
-		//renderModel(shadowMappingDepthShader, railVehicle.GetVehicleModel(), railVehicle.GetPosition(), railVehicle.GetRotation(), glm::vec3(1.0f));
-		//for (auto& railPosition : railPositions)
-		//{
-		//	renderModel(shadowMappingDepthShader, railModel, railPosition, railRotation, railScale);
-		//}
 
 		glCullFace(GL_BACK);
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);

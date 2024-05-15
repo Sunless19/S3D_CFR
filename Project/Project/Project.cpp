@@ -497,7 +497,7 @@ int main(int argc, char** argv)
 		processInput(window);
 
 		// Terrain update
-		if (trainZ <= chunkBorder && trainZ >= chunkBorder - 0.3f)
+		if (trainZ <= chunkBorder && trainZ >= chunkBorder - 1.0f)
 		{
 			terrain.addChunk();
 			chunkBorder -= 200.0f;

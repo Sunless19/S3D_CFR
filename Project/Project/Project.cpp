@@ -318,6 +318,17 @@ int main(int argc, char** argv)
 	shadowMappingShader.Use();
 	shadowMappingShader.SetInt("diffuseTexture", 0);
 	shadowMappingShader.SetInt("shadowMap", 1);
+	
+	shadowMappingShader.SetFloat("ambientFactor", 0.1f); // Adjust as needed
+	
+	glm::vec3 fogColor(0.5f, 0.5f, 0.5f); // Example fog color, adjust as needed
+	shadowMappingShader.SetVec3("fogColor", fogColor);
+	shadowMappingShader.SetFloat("fogStart", 75.0f);    // Distance at which fog starts
+	shadowMappingShader.SetFloat("fogEnd", 150.0f);      // Distance at which fog completely obscures objects
+
+	
+	shadowMappingShader.SetInt("diffuseTexture", 0);
+	shadowMappingShader.SetInt("shadowMap", 1);
 
 	glm::vec3 lightPos(trainVehicle.GetPosition().x, 100.0f, trainVehicle.GetPosition().z);
 
@@ -466,18 +477,6 @@ int main(int argc, char** argv)
 	//glClearColor(fogColor[0], fogColor[1], fogColor[2], fogColor[3]); // Setarea culorii de fundal la culoarea ceții pentru a integra uniform ceața în întreaga scenă
 	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//Fog attempt #2
-	float cameraDistance = glm::length(pCamera->GetPosition());
-
-	// În bucla while, după ce ai inițializat framebuffer-ul
-	float visibilityFactor = 0.5f;
-
-	// Setează factorul de încetosare și opacitate în shader-ul de umbră
-	shadowMappingDepthShader.SetFloat("visibilityFactor", visibilityFactor);
-
-	// Actualizează shader-ul principal și shader-ul skybox cu același factor de vizibilitate
-	ModelShader.SetFloat("visibilityFactor", visibilityFactor);
-	skyboxShader.SetFloat("visibilityFactor", visibilityFactor);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -501,7 +500,7 @@ int main(int argc, char** argv)
 		{
 			terrain.addChunk();
 			chunkBorder -= 200.0f;
-
+			
 			switch (hasStation)
 			{
 			case true:
@@ -666,15 +665,26 @@ int main(int argc, char** argv)
 			break;
 		}
 
-		glm::vec3 lightColor = glm::vec3(1.0f, 1.0f, 1.0f);
+		glm::vec3 light
+			= glm::vec3(1.0f, 1.0f, 1.0f);
 		glm::vec3 lightDir = glm::normalize(glm::vec3(-0.2f, -1.0f, -0.3f));
 		glm::vec3 objectColor = glm::vec3(1.0f, 0.5f, 0.31f);
 
 		ModelShader.Use();
-		ModelShader.SetVec3("lightColor", lightColor);
+		ModelShader.SetVec3("lightColor", glm::vec3(1.0,1.0,1.0));
 		ModelShader.SetVec3("lightDir", lightDir);
 		ModelShader.SetVec3("objectColor", objectColor);
 
+		glm::vec3 trainPosition = trainVehicle.GetPosition();
+		ModelShader.SetVec3("trainPos", trainPosition);
+
+		glm::vec3 fogColor(0.5f, 0.5f, 0.5f);
+		ModelShader.SetVec3("fogColor", fogColor);
+		ModelShader.SetFloat("fogStart", trainVehicle.GetPosition().z + 50.0f);    // Increased distance at which fog starts
+		ModelShader.SetFloat("fogEnd", trainVehicle.GetPosition().z + 200.0f);
+		ModelShader.SetFloat("exclusionRadius", 100.0f); 
+		ModelShader.SetInt("texture_diffuse1", 0);
+		
 		glDepthFunc(GL_LEQUAL);
 		glDepthMask(GL_FALSE);
 		skyboxShader.Use();

@@ -124,7 +124,7 @@ void renderScene(const Shader& shader);
 void renderModel(Shader& ourShader, Model& ourModel, const glm::vec3& position, float rotationAngle, const glm::vec3& scale);
 
 
-double deltaTime = 0.0f; // time between current frame and last frame
+double deltaTime = 0.0f;
 double lastFrame = 0.0f;
 
 float skyboxVertices[] = {
@@ -206,7 +206,7 @@ std::vector<glm::vec3> mountainsScales =
 	glm::vec3(0.6f),
 };
 
-float scaleFactor = 2.0f; // You can adjust this value according to your needs
+float scaleFactor = 2.0f;
 
 Model railModel, trainModel, treeModel, mountainModel, stationModel, benchModel, humanModel, warModel, forestModel, BucurestiModel, PloiestiModel, SinaiaModel, BrasovModel;
 MoveableObject trainVehicle, railVehicle;
@@ -226,12 +226,12 @@ std::vector<std::string> facesDay
 std::vector<std::string>facesNight
 {
 
-	"skybox_images_night\\skybox_night_front.jpg",
-	"skybox_images_night\\skybox_night_back.jpg",
-	"skybox_images_night\\skybox_night_left.jpg",
-	"skybox_images_night\\skybox_night_right.jpg",
-	"skybox_images_night\\skybox_night_top.jpg",
-	"skybox_images_night\\skybox_night_bottom.jpg"
+	"skybox_images_night\\px_2.png",
+	"skybox_images_night\\nx_2.png",
+	"skybox_images_night\\py_2.png",
+	"skybox_images_night\\ny_2.png",
+	"skybox_images_night\\pz_2.png",
+	"skybox_images_night\\nz_2.png"
 };
 
 
@@ -278,13 +278,9 @@ int main(int argc, char** argv)
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
-
 	glewInit();
-
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
 	pCamera = new Camera(SCR_WIDTH, SCR_HEIGHT, glm::vec3(0.0f, 7.0f, 25.0f));
-
 	glEnable(GL_DEPTH_TEST);
 
 
@@ -319,7 +315,6 @@ int main(int argc, char** argv)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 	// shader configuration
-	// --------------------
 	shadowMappingShader.Use();
 	shadowMappingShader.SetInt("diffuseTexture", 0);
 	shadowMappingShader.SetInt("shadowMap", 1);
@@ -342,10 +337,6 @@ int main(int argc, char** argv)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	//unsigned int cubemapTexture;
-
-	//unsigned int cubemapTextureNight;
 
 	glGenTextures(1, &cubemapTexture);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
@@ -759,7 +750,7 @@ void processInput(GLFWwindow* window)
 	//-----------------NIGHT MODE-----------------
 	if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS)
 	{
-		blendFactor = std::min(blendFactor + 0.01, 1.0);
+		blendFactor = std::min(blendFactor + 0.01, 0.8);
 		ambientFactor = std::max(ambientFactor - 0.01, 0.34);
 	}
 	if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)

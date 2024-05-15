@@ -680,8 +680,8 @@ int main(int argc, char** argv)
 
 		glm::vec3 fogColor(0.5f, 0.5f, 0.5f);
 		ModelShader.SetVec3("fogColor", fogColor);
-		ModelShader.SetFloat("fogStart", trainVehicle.GetPosition().z + 50.0f);    // Increased distance at which fog starts
-		ModelShader.SetFloat("fogEnd", trainVehicle.GetPosition().z + 200.0f);
+		ModelShader.SetFloat("fogStart", trainVehicle.GetPosition().x + 50.0f);    // Increased distance at which fog starts
+		ModelShader.SetFloat("fogEnd", trainVehicle.GetPosition().x + 200.0f);
 		ModelShader.SetFloat("exclusionRadius", 100.0f); 
 		ModelShader.SetInt("texture_diffuse1", 0);
 		

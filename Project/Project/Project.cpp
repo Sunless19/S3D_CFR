@@ -750,13 +750,13 @@ void processInput(GLFWwindow* window)
 	//-----------------NIGHT MODE-----------------
 	if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS)
 	{
-		blendFactor = std::min(blendFactor + 0.01, 0.8);
-		ambientFactor = std::max(ambientFactor - 0.01, 0.34);
+		blendFactor = std::min(blendFactor + 0.01, 0.85);
+		ambientFactor = std::max(ambientFactor - 0.01, 0.0);
 	}
 	if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
 	{
 		blendFactor = std::max(blendFactor - 0.01, 0.0);
-		ambientFactor = std::min(ambientFactor + 0.01, 0.9);
+		ambientFactor = std::min(ambientFactor + 0.01, 1.0);
 	}
 
 	//-----------------TRAIN MOVEMENT-----------------

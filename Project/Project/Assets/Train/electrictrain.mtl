@@ -11,3 +11,81 @@ d 1.000000
 illum 2
 map_Kd electrictrain.png
 map_Bump -bm 0.500000 electrictrain_n.png
+
+newmtl MTPanel_Back
+Ns 268.512390
+Ka 0.190909 0.190909 0.190909
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 3
+map_Kd panel/MTPanel_Back.png
+
+newmtl MT_Glass
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 1
+map_Kd panel/MT_Glass_albedo.jpg
+map_Ns panel/MT_Glass_roughness.jpg
+map_refl panel/MT_Glass_metallic.jpg
+map_d panel/MT_Glass_opacity.jpg
+map_Bump -bm 1.000000 panel/MT_Glass_normal.png
+
+newmtl MT_Panel
+Ka 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+map_Kd panel/MT_Panel_albedo.jpg
+map_Ns panel/MT_Panel_roughness.jpg
+map_refl panel/MT_Panel_metallic.jpg
+map_Bump -bm 1.000000 panel/MT_Panel_normal.png
+
+newmtl Panel_Table
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd table/table.png
+map_Ns table/metal_0058_roughness_1k.jpg
+map_refl table/metal_0058_metallic_1k.jpg
+map_Bump -bm 1.000000 table/metal_0058_normal_opengl_1k.png
+
+newmtl TrainFloor
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd floor/metal_0069_color_1k.jpg
+map_Ns floor/metal_0069_roughness_1k.jpg
+map_refl floor/metal_0069_metallic_1k.jpg
+map_Bump -bm 1.000000 floor/metal_0069_normal_opengl_1k.png
+
+newmtl TrainGlass
+Ns 1000.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.490000
+d 0.172727
+illum 9
+map_Kd blankSpace.png
+
+newmtl train_chair
+Ns 50.000011
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 3
+map_Kd chair.jpg

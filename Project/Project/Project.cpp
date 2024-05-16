@@ -34,7 +34,7 @@
 using namespace irrklang;
 ISoundEngine* SoundEngine = createIrrKlangDevice();
 ISoundEngine* TrainSoundEngine = createIrrKlangDevice();
-
+bool isInside = false;
 void SetOutsideSound(bool day)
 {
 	SoundEngine->removeAllSoundSources();
@@ -735,6 +735,8 @@ void processInput(GLFWwindow* window)
 		if (freeCameraView == false)
 			pCamera->set(SCR_WIDTH, SCR_HEIGHT, glm::vec3(trainVehicle.GetPosition().x, trainVehicle.GetPosition().y + 6, trainVehicle.GetPosition().z));
 		trainVehicle.setSpeed(12.5);
+		if (freeCameraView == false && isInside == true)
+			pCamera->set(SCR_WIDTH, SCR_HEIGHT, glm::vec3(trainVehicle.GetPosition().x, trainVehicle.GetPosition().y + 2.4, trainVehicle.GetPosition().z-15));
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
@@ -750,17 +752,27 @@ void processInput(GLFWwindow* window)
 		if (freeCameraView == false)
 			pCamera->set(SCR_WIDTH, SCR_HEIGHT, glm::vec3(trainVehicle.GetPosition().x, trainVehicle.GetPosition().y + 6, trainVehicle.GetPosition().z));
 		trainVehicle.setSpeed(12.5);
+		if (freeCameraView == false && isInside == true)
+			pCamera->set(SCR_WIDTH, SCR_HEIGHT, glm::vec3(trainVehicle.GetPosition().x, trainVehicle.GetPosition().y + 2.4, trainVehicle.GetPosition().z - 15));
 	}
 
 	//-----------------CAMERA MODE---------------------
 	if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
 	{
 		freeCameraView = false;
+		pCamera->set(SCR_WIDTH, SCR_HEIGHT, glm::vec3(trainVehicle.GetPosition().x, trainVehicle.GetPosition().y + 6, trainVehicle.GetPosition().z));
+	}
+	if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
+	{
+		freeCameraView = false;
+		isInside = true;
+		pCamera->set(SCR_WIDTH, SCR_HEIGHT, glm::vec3(trainVehicle.GetPosition().x, trainVehicle.GetPosition().y + 2.4, trainVehicle.GetPosition().z - 15));
 	}
 	if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
 	{
 		freeCameraView = true;
 		pCamera->SetFreeCamera(true);
+		isInside = false;
 	}
 
 	//-----------------FREE CAMERA MOVEMENT-----------------

@@ -1,0 +1,13 @@
+# Blender 4.1.1 MTL File: 'None'
+# www.blender.org
+
+newmtl Default_Material
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd haystack_Base_Color.png
+map_Ns haystack_Roughness.png
+map_refl haystack_Metallic.png
+map_d haystack_Opacity.png

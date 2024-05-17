@@ -75,6 +75,11 @@ float Chunk::getZ() {
 	return position[2];
 }
 
+void Chunk::setTextureID(GLuint texture)
+{
+	textureID = texture;
+}
+
 GLuint Chunk::getTextureID()
 {
 	return textureID;

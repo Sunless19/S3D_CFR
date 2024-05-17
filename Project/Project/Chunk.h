@@ -21,5 +21,6 @@ public:
 	float getY();
 	float getZ();
 
+	void setTextureID(GLuint texture);
 	GLuint getTextureID();
 };

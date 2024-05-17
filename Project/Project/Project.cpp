@@ -169,46 +169,44 @@ std::vector<glm::vec3> railPositions =
 std::vector<glm::vec3> forestTreePositions =
 {
 	glm::vec3(-40.0f, -1.5f, 50.0f),
-	glm::vec3(-40.0f, -1.5f, -10.0f),
-	glm::vec3(-40.0f, -1.5f, -70.0f),
-	glm::vec3(-40.0f, -1.5f, -140.0f),
-
 	glm::vec3(40.0f, -1.5f, 50.0f),
 	glm::vec3(40.0f, -1.5f, -10.0f),
+	glm::vec3(-40.0f, -1.5f, -10.0f),
+
+	glm::vec3(-40.0f, -1.5f, -70.0f),
 	glm::vec3(40.0f, -1.5f, -70.0f),
+	glm::vec3(-40.0f, -1.5f, -140.0f),
 	glm::vec3(40.0f, -1.5f, -140.0f),
 };
 
-std::vector<glm::vec3> treePositions =
+std::vector<glm::vec3> decorPositions =
 {
-	glm::vec3(-40.0f, -1.5f, 50.0f),
-	glm::vec3(-40.0f, -1.5f, -10.0f),
-	glm::vec3(-40.0f, -1.5f, -70.0f),
-	glm::vec3(-40.0f, -1.5f, -140.0f),
-	glm::vec3(-40.0f, -1.5f, -210.0f),
+	glm::vec3(-35.0f, -1.5f, -110.0f),
+	glm::vec3(55.0f, -1.5f, -110.0f),
+	glm::vec3(-20.0f, -1.5f, -140.0f),
+	glm::vec3(20.0f, -1.5f, -140.0f),
 
-	glm::vec3(40.0f, -1.5f, 50.0f),
-	glm::vec3(40.0f, -1.5f, -10.0f),
-	glm::vec3(40.0f, -1.5f, -70.0f),
-	glm::vec3(40.0f, -1.5f, -140.0f),
-	glm::vec3(40.0f, -1.5f, -210.0f),
+	glm::vec3(-20.0f, -1.5f, 50.0f),
+	glm::vec3(50.0f, -1.5f, 50.0f),
+	glm::vec3(-30.0f, -1.5f, -70.0f),
+	glm::vec3(90.0f, -1.5f, -70.0f),
 };
 
 std::vector<glm::vec3> mountainsPositions =
 {
-	glm::vec3(50.0f, -1.55f, -25.0f),
-	glm::vec3(-50.0f, -1.55f, -35.0f),
+	glm::vec3(85.0f, -1.55f, -35.0f),
+	glm::vec3(-70.0f, -1.55f, -100.0f),
 };
 
 std::vector<glm::vec3> mountainsScales =
 {
-	glm::vec3(0.8f),
+	glm::vec3(0.7f),
 	glm::vec3(0.6f),
 };
 
 float scaleFactor = 2.0f;
 
-Model railModel, trainModel, treeModel, mountainModel, stationModel, benchModel, humanModel, warModel, forestModel, BucurestiModel, PloiestiModel, SinaiaModel, BrasovModel;
+Model railModel, trainModel, haystackModel, mountainModel, stationModel, benchModel, humanModel, treesModel, forestModel, BucurestiModel, PloiestiModel, SinaiaModel, BrasovModel;
 MoveableObject trainVehicle, railVehicle;
 
 bool night = false;
@@ -290,6 +288,7 @@ int main(int argc, char** argv)
 	Shader skyboxShader("skybox.vs", "skybox.fs");
 
 	unsigned int floorTexture = CreateTexture("skybox_images\\grass.jpg");
+	unsigned int fieldTexture = CreateTexture("Assets\\Field\\field_texture.jpg");
 
 	const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 	unsigned int depthMapFBO;
@@ -325,7 +324,7 @@ int main(int argc, char** argv)
 	shadowMappingShader.SetFloat("fogEnd", 150.0f);      // Distance at which fog completely obscures objects
 	shadowMappingShader.SetInt("diffuseTexture", 0);
 	shadowMappingShader.SetInt("shadowMap", 1);
-	
+
 	//lightPos over the train to follow it
 	glm::vec3 lightPos(trainVehicle.GetPosition().x, 100.0f, trainVehicle.GetPosition().z);
 
@@ -410,7 +409,7 @@ int main(int argc, char** argv)
 	}
 
 	//Terrain loading
-	terrain.initialize(floorTexture);
+	terrain.initialize(floorTexture, fieldTexture);
 	float chunkBorder = -100.0f;
 	bool hasStation = true;
 
@@ -421,12 +420,15 @@ int main(int argc, char** argv)
 	//Rail model loading
 	railModel = Model("Assets\\Rail\\rail.obj");
 
-	//Tree model loading
-	treeModel = Model("Assets\\Tree\\Tree.obj");
-	forestModel = Model("Assets\\forest\\mountain_forest.obj");
+	//Decorations loading
+	benchModel = Model("Assets\\Bench\\Bench_HighRes.obj");
+	humanModel = Model("Assets\\Human\\Humano_01Business_01_30K.obj");
+	treesModel = Model("Assets\\Forest\\station_trees.obj");
 
-	//Mountain model loading
+	forestModel = Model("Assets\\Forest\\mountain_forest.obj");
 	mountainModel = Model("Assets\\Mountain\\mountain.obj");
+	haystackModel = Model("Assets\\Field\\haystack.obj");
+
 
 	//Station model loading
 	BucurestiModel = Model("Assets\\TrainStations\\bucuresti_station.obj");
@@ -437,11 +439,6 @@ int main(int argc, char** argv)
 	std::vector<Model> stationModels = { BucurestiModel, PloiestiModel, SinaiaModel, BrasovModel };
 	stationCount = 0;
 
-	//Bench model loading
-	benchModel = Model("Assets\\Bench\\Bench_HighRes.obj");
-
-	//Human model loading
-	humanModel = Model("Assets\\Human\\Humano_01Business_01_30K.obj");
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -465,7 +462,9 @@ int main(int argc, char** argv)
 		{
 			terrain.addChunk();
 			chunkBorder -= 200.0f;
-			
+			if (stationCount == 0)
+				terrain.setTexture(floorTexture);
+
 			switch (hasStation)
 			{
 			case true:
@@ -517,11 +516,12 @@ int main(int argc, char** argv)
 		float railRotation = 0.0f;
 		glm::vec3 railScale = glm::vec3(0.001f, 0.001f, 0.002f);
 
-		//---TREE VARIABLES---
-		float treeRotation = 0.0f;
-		glm::vec3 treeScale = glm::vec3(1);
+		//---DECOR VARIABLES---
+		float decorRotation = 0.0f;
+		glm::vec3 forestScale = glm::vec3(1);
 
-		//----MOUNTAIN VARIABLES---
+
+
 		float mountainRotation = 0.0f;
 		glm::vec3 mountainScale = glm::vec3(0.1f);
 		for (int i = 0; i < mountainsPositions.size(); i++)
@@ -544,7 +544,7 @@ int main(int argc, char** argv)
 		shadowMappingShader.SetFloat("ambientFactor", ambientFactor);
 		// set light uniforms
 		shadowMappingShader.SetVec3("viewPos", pCamera->GetPosition());
-		shadowMappingShader.SetVec3("lightPos", glm::vec3(trainVehicle.GetPosition().x,100.f,trainVehicle.GetPosition().z));
+		shadowMappingShader.SetVec3("lightPos", glm::vec3(trainVehicle.GetPosition().x, 100.f, trainVehicle.GetPosition().z));
 		shadowMappingShader.SetMat4("lightSpaceMatrix", lightSpaceMatrix);
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, depthMap);
@@ -566,63 +566,95 @@ int main(int argc, char** argv)
 			//Station
 			if (stationCount < stationModels.size())
 				renderModel(ModelShader, stationModels[stationCount], glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), 0.0f, glm::vec3(1.0f));
+
 			//Bench
 			renderModel(ModelShader, benchModel, glm::vec3(10.0f, -1.5f, 18.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), -90.0f, glm::vec3(0.01f));
 
 			//Human
 			renderModel(ModelShader, humanModel, glm::vec3(8.0f, -1.5f, 18.0f) + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), -90.0f, glm::vec3(0.01f));
 
-
-			//Station trees
-			for (int i = 0; i < forestTreePositions.size(); i++)
+			//Decor
+			if (stationCount == 0)
 			{
-				renderModel(ModelShader, treeModel, forestTreePositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), treeRotation, treeScale);
+				for (int i = 0; i < decorPositions.size()/2; i++)
+				{
+					renderModel(ModelShader, haystackModel, decorPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), decorRotation, glm::vec3(5.f));
+
+					if (decorRotation <= 360.0f)
+						decorRotation += 90.0f;
+					else
+						decorRotation = 0.0f;
+				}
+
+				for (int i = 0; i < forestTreePositions.size()/2; i++)
+				{
+					renderModel(ModelShader, treesModel, forestTreePositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), 0.0f, glm::vec3(2.5f));
+				}
 			}
-
-			for (int i = 0; i < forestTreePositions.size(); i++)
+			else
 			{
-				renderModel(ModelShader, forestModel, forestTreePositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), treeRotation, treeScale);
+				for (int i = 0; i < forestTreePositions.size(); i++)
+				{
+					renderModel(ModelShader, treesModel, forestTreePositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), decorRotation, glm::vec3(2.5f));
 
-				if (treeRotation <= 360.0f)
-					treeRotation += 90.0f;
-				else
-					treeRotation = 0.0f;
+					if (decorRotation <= 360.0f)
+						decorRotation += 90.0f;
+					else
+						decorRotation = 0.0f;
+				}
 			}
 
 			break;
 
 		case false:
-			//Forest trees
-			for (int i = 0; i < forestTreePositions.size(); i++)
+			//Decor
+			if (stationCount == 1)
 			{
-				renderModel(ModelShader, forestModel, forestTreePositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), treeRotation, treeScale);
+				//Haystack
+				for (int i = 0; i < decorPositions.size(); i++)
+				{
+					renderModel(ModelShader, haystackModel, decorPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), decorRotation, glm::vec3(5.f));
 
-				if (treeRotation <= 360.0f)
-					treeRotation += 90.0f;
-				else
-					treeRotation = 0.0f;
+					if (decorRotation <= 360.0f)
+						decorRotation += 90.0f;
+					else
+						decorRotation = 0.0f;
+				}
+			}
+			else
+			{
+				//Forest
+				for (int i = 0; i < forestTreePositions.size(); i++)
+				{
+					renderModel(ModelShader, forestModel, forestTreePositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), decorRotation, forestScale);
+
+					if (decorRotation <= 360.0f)
+						decorRotation += 90.0f;
+					else
+						decorRotation = 0.0f;
+				}
+				
+				//Mountains
+				for (int i = 0; i < mountainsPositions.size(); i++)
+				{
+					renderModel(ModelShader, mountainModel, mountainsPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), mountainRotation, mountainsScales[i]);
+				}
 			}
 
-			//Mountains
-			for (int i = 0; i < mountainsPositions.size(); i++)
-			{
-				renderModel(ModelShader, mountainModel, mountainsPositions[i] + glm::vec3(0.0f, 0.0f, chunkBorder + 100.0f), mountainRotation, mountainsScales[i]);
-			}
 
 			//Station from far
 			if (stationCount < stationModels.size())
-			renderModel(ModelShader, stationModels[stationCount], glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder - 100.0f), 0.0f, glm::vec3(1.0f));
+				renderModel(ModelShader, stationModels[stationCount], glm::vec3(5.0f, -1.5f, 10.0f) + glm::vec3(0.0f, 0.0f, chunkBorder - 100.0f), 0.0f, glm::vec3(1.0f));
 
 			break;
 		}
 
-		glm::vec3 light
-			= glm::vec3(1.0f, 1.0f, 1.0f);
+		glm::vec3 light = glm::vec3(1.0f, 1.0f, 1.0f);
 		glm::vec3 lightDir = glm::normalize(glm::vec3(-0.2f, -1.0f, -0.3f));
 		glm::vec3 objectColor = glm::vec3(1.0f, 0.5f, 0.31f);
 
 		ModelShader.Use();
-		ModelShader.SetVec3("lightColor", glm::vec3(1.0,1.0,1.0));
+		ModelShader.SetVec3("lightColor", glm::vec3(1.0, 1.0, 1.0));
 		ModelShader.SetVec3("lightDir", lightDir);
 		ModelShader.SetVec3("objectColor", objectColor);
 
@@ -633,9 +665,9 @@ int main(int argc, char** argv)
 		ModelShader.SetVec3("fogColor", fogColor);
 		ModelShader.SetFloat("fogStart", trainVehicle.GetPosition().x + 50.0f);    // Increased distance at which fog starts
 		ModelShader.SetFloat("fogEnd", trainVehicle.GetPosition().x + 200.0f);
-		ModelShader.SetFloat("exclusionRadius", 100.0f); 
+		ModelShader.SetFloat("exclusionRadius", 100.0f);
 		ModelShader.SetInt("texture_diffuse1", 0);
-		
+
 		glDepthFunc(GL_LEQUAL);
 		glDepthMask(GL_FALSE);
 		skyboxShader.Use();
@@ -736,12 +768,12 @@ void processInput(GLFWwindow* window)
 			pCamera->set(SCR_WIDTH, SCR_HEIGHT, glm::vec3(trainVehicle.GetPosition().x, trainVehicle.GetPosition().y + 6, trainVehicle.GetPosition().z));
 		trainVehicle.setSpeed(12.5);
 		if (freeCameraView == false && isInside == true)
-			pCamera->set(SCR_WIDTH, SCR_HEIGHT, glm::vec3(trainVehicle.GetPosition().x, trainVehicle.GetPosition().y + 2.4, trainVehicle.GetPosition().z-15));
+			pCamera->set(SCR_WIDTH, SCR_HEIGHT, glm::vec3(trainVehicle.GetPosition().x, trainVehicle.GetPosition().y + 2.4, trainVehicle.GetPosition().z - 15));
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
-		trainVehicle.setSpeed(20.5);
+		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS)
+			trainVehicle.setSpeed(20.5);
 		trainVehicle.ProcessKeyboard(V_BACKWARD, (float)deltaTime);
 		if (!isTrainSoundPlaying)
 		{

@@ -5,7 +5,7 @@
 class Terrain {
 public:
 	Terrain();
-	void initialize(GLuint texture);
+	void initialize(GLuint texture1, GLuint texture2);
 
 	void addChunk();
 	void deleteChunk();

@@ -320,8 +320,8 @@ int main(int argc, char** argv)
 	shadowMappingShader.SetInt("shadowMap", 1);
 	shadowMappingShader.SetFloat("ambientFactor", 0.1f); // Adjust as needed
 	shadowMappingShader.SetVec3("fogColor", fogColor);
-	shadowMappingShader.SetFloat("fogStart", 50.0f);    // Distance at which fog starts
-	shadowMappingShader.SetFloat("fogEnd", 100.0f);      // Distance at which fog completely obscures objects
+	shadowMappingShader.SetFloat("fogStart", 25.0f);    // Distance at which fog starts
+	shadowMappingShader.SetFloat("fogEnd", 150.0f);      // Distance at which fog completely obscures objects
 	shadowMappingShader.SetInt("diffuseTexture", 0);
 	shadowMappingShader.SetInt("shadowMap", 1);
 
@@ -663,9 +663,9 @@ int main(int argc, char** argv)
 
 		glm::vec3 fogColor(0.5f, 0.5f, 0.5f);
 		ModelShader.SetVec3("fogColor", fogColor);
-		ModelShader.SetFloat("fogStart", trainVehicle.GetPosition().x + 50.0f);    // Increased distance at which fog starts
-		ModelShader.SetFloat("fogEnd", trainVehicle.GetPosition().x + 100.0f);
-		ModelShader.SetFloat("exclusionRadius", 100.0f);
+		ModelShader.SetFloat("fogStart", trainVehicle.GetPosition().x + 25.0f);    // Increased distance at which fog starts
+		ModelShader.SetFloat("fogEnd", trainVehicle.GetPosition().x + 200.0f);
+		ModelShader.SetFloat("exclusionRadius", 50.0f);
 		ModelShader.SetInt("texture_diffuse1", 0);
 
 		glDepthFunc(GL_LEQUAL);

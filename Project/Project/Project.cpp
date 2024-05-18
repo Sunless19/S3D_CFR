@@ -41,7 +41,7 @@ void SetOutsideSound(bool day)
 	if (day)
 	{
 		SoundEngine->play2D("Assets\\Audio\\Day.wav", true);
-		SoundEngine->setSoundVolume(0.8);
+		SoundEngine->setSoundVolume(0.3);
 	}
 	else
 	{
@@ -54,7 +54,7 @@ void setTrainSound(bool move) {
 	TrainSoundEngine->removeAllSoundSources();
 	if (move) {
 		TrainSoundEngine->play2D("Assets\\Audio\\train.wav", true);
-		TrainSoundEngine->setSoundVolume(0.9);
+		TrainSoundEngine->setSoundVolume(0.3);
 	}
 	else {
 		TrainSoundEngine->removeAllSoundSources();

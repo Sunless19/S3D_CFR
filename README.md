@@ -1,13 +1,25 @@
-Experience the scenic train ride from Bucharest to Brasov like never before with our OpenGL, with dynamic day and night cycles controlled effortlessly.
+# OpenGL type project for simple train simulator.
 
-As you traverse through procedurally generated terrain, meticulously crafted using Blender models, marvel at the stunning vistas illuminated by realistic Phong lighting and shaders. With frustum culling ensuring smooth performance, lose yourself in the breathtaking landscapes that unfold outside your window.
+Experience the scenic train ride from Bucharest to Brasov with this OpenGL project consisting various dynamic day and night cycles controlled effortlessly.
 
-Controls:
+Navigate procedurally generated terrain, built with detailed Blender models and enhanced by realistic Phong lighting and shaders. This project contains frustum culling for smooth performance while simulating a simple trip consistent of multiple complex external objects. The libraries included are ennumerated down below for use .
 
-- W/S: Train Movement;
+# Controls:
+
+- W/S: Train Movement (forward/backward);
 - N/M: Day/Night Cycle;
 - C/T/Y/R: Camera Modes (C-freecam, T-On Train, Y-On Board, R-Reset);
 - SHIFT: Sprint Movement;
 - Arrows: Camera movement;
 
-Made by: Sunless19, thatBeatrice, xNaga09x
+### Available libraries for the project. 
+
+- [assimp](https://github.com/assimp/assimp)
+- [freeglut](https://freeglut.sourceforge.net)
+- [glew](https://glew.sourceforge.net)
+- [glfw](https://www.glfw.org)
+- [glm](https://github.com/g-truc/glm)
+- [stb](https://github.com/nothings/stb)
+- [irrKlang](https://www.ambiera.com/irrklang/)
+
+### Made by: Sunless19, thatBeatrice, xNaga09x
